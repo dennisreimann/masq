@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title><%=t :openid_consumer_testsuite_title %></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<%= stylesheet_link_tag 'masq/application' %>
+		<%= csrf_meta_tags %>
+	</head>
+	<body>
+		<div id="head">
+    	<h1><%=t :relying_party_title %></h1>
+		</div>
+		<div id="main">
+			<div class="wrap">
+  			<h2><%=t :openid_consumer_testsuite_title %></h2>
+	    	<% if flash[:notice] %><div class="notice"><%=simple_format h flash[:notice] %></div><% end %>
+	    	<% if flash[:alert] %><div class="error"><%=simple_format h flash[:alert] %></div><% end %>
+				<%= yield %>
+			</div>
+		</div>
+		<div id="foot">
+			<div class="wrap">
+				<span class="note">
+					powered by <%= link_to "masq", 'https://github.com/dbloete/masq' %>
+					and <%= link_to image_tag('masq/openid_symbol.png') + " OpenID", 'http://openid.net/' %>
+				</span>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,4 +1,8 @@
-# desc "Explaining what the task does"
-# task :masq do
-#   # Task goes here
-# end
+namespace :masq do
+  namespace :openid do
+    desc 'Cleanup OpenID store'
+    task :cleanup_store => :environment do
+      Masq::ActiveRecordStore.new.cleanup
+    end
+  end
+end

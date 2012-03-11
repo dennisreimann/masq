@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.2.2"
   s.add_dependency "ruby-openid"
   s.add_dependency "ruby-yadis"
+  s.add_dependency "i18n_data"
 
   s.add_development_dependency "sqlite3"
 end

@@ -1,0 +1,257 @@
+nl:
+  # account controller
+  thanks_for_signing_up_activation_link: Bedankt voor het aanmelden! We hebben u een mail gestuurd met een activatielink.
+  thanks_for_signing_up: Bedankt voor het aanmelden!
+  profile_updated: Uw profiel werd bijgewerkt.
+  account_disabled: Uw account has werd uitgezet.
+  entered_password_is_wrong: Het ingevoerde wachtwoord is fout.
+  account_activated_login_now: Uw account werd geactiveerd - u kunt nu inloggen.
+  couldnt_find_account_with_code_create_new_one: We konden geen account vinden met de opgegeven activatiecode. Maak alstublieft een niew account aan.
+  account_already_activated_please_login: Uw account is al geactiveerd - Log in alstublieft.
+  password_has_been_changed: Uw wachtwoord werd gewijzigd.
+  sorry_password_couldnt_be_changed: Sorrie, uw wachtwoord kon niet gewijzigd worden.
+  confirmation_of_new_password_invalid: De confirmatie van het nieuwe wachtwoord is incorrect.
+  old_password_incorrect: Uw oude wachtwoord is incorrect
+  # account views
+  public_persona: Publieke persona
+  forgot_password_create_new_one: U vergat uw wachtwoord? Hier kunt u een nieuwe aanmaken.
+  account_created_but_not_activated_yet: Uw OpenID account werd aangemaakt, maar is nog niet geactiveerd.#
+  please_activate_it_by_clicking_the_following_link: Activeert u alstublieft door op de volgende link te klikken.
+  my_profile: Mijn profiel
+  login: Login
+  password: Wachtwoord
+  my_password: Mijn wachtwoord
+  old_password: Oude wachtwoord
+  new_password_minimum_6_characters: Nieuw wachtwoord <span class="note">(minimum lengte is 6 karakters)</span>
+  password_confirmation: Wachtwoord confirmatie
+  submit_update: update
+  my_yubikey: Mijn Yubikey
+  your_account_is_associated_with_the_yubico_identity: Uw account is gekoppeld met de Yubico identiteit
+  yubikey_how_to_use: "U kunt de Yubikey gebruiken naast de wachtwoord inlog om in te loggen in uw account. Voer uw normale
+    wachtwoord en uw Yubico OPT (niet gesplitst met spaties en dergelijke) op de loginpagina in."
+  remove_association: verwijder koppeling
+  your_yubikey_a_one_time_password: Uw Yubikey <span class="note">(een Yubico eenmalig wachtwoord, OTP)</span>
+  associate_account_with_yubikey: koppel mijn account met deze Yubikey
+  disable_my_account: Zet mijn account uit
+  wont_be_possible_to_reclaim_identifier: Wees bewust van het gegeven dat het niet mogelijk zal zijn uw huidige OpenID identificatie terug te halen.
+  confirm_by_entering_password: Bevestig door het wachtwoord in te voeren
+  delete_my_account_and_data: verwijder mijn account en al mijn data
+
+  signup_title: Registreer
+  signup: Registreer  # ???
+
+  # account mailer
+  please_activate_your_account: Activeer alstublieft uw account
+  your_request_for_a_new_password: Uw aanvraag voor een nieuw wachtwoord
+
+  # consumer controller
+  immediate_request_failed_setup_needed: Onmiddelijke aanvraag mislukt - inregelen vereist
+  openid_transaction_cancelled: OpenID transactie afgebroken.
+  verification_of_identifier_failed: "Verificatie van %{identifier} mislukt: %{message}"
+  verification_failed_message: "Verificatie mislukt: %{message}"
+  verification_of_identifier_succeeded: Verificatie van %{identifier} gelukt.
+  simple_registration_data_requested: Simpele Registratiedata werd aangevraagd
+  but_none_was_returned: maar werd niet teruggegeven.
+  but_got_no_response: maar geen reactie.
+  but_an_error_occured: "maar een fout deed zich voor:\n%{error_message}"
+  and_saved_at_the_identity_provider: en werd opgeslagen bij de Identity Provider.
+  the_following_data_were_sent: "De volgende data werd verzonden:"
+  attribute_exchange_data_requested: Uitwisseling van attributen werd aangevraagd
+  attribute_exchange_store_requested: Uitwisseling van attributen werd verzonden
+  authentication_policies_requested: Authenticatiebeleid werd aangevraagd
+  and_server_reported_the_following: "en de server meldde het volgende:"
+  but_the_server_did_not_report_one: maar de server rapporteerde geen.
+  authentication_time: Authenticatietijd
+
+  # consumer views
+  identifier: Indentificatie
+  verify: Bevestigen
+  use_immediate_mode: Gebruik direct modus
+  request_registration_data: Vraag regsitratiedata aan
+  request_attribute_exchange_data: Vraag uitwisseing van attributen aan
+  store_attribute_exchange_data: Sla attributen met attribuutuitwisselingen op
+  request_pape: Vraag phising-velig beleid voor authenticatieRequest (PAPE)
+  force_post: Forceer gebruik van POST in de transacties door 2K aan extra data toe te voegen
+
+  # info
+  questions_answers: Vragne? Antwoorden!
+  here_we_cover_openid_topics: Hier behandelen we enkele OpenIDgerelateerde onderwerpen.
+  openid_delegation: OpenID delegatie
+  delegation_explanation: "Delegatie is een manier om onze eigen website of blog-url als OpenID-identificatie te gebruiken. Aanvragen kunnen naar deze server worden doorgestuurd, dooe het volgende HTML-fragment aan de <code>&lt;head&gt;</code>
+    van uw site toe te voegen:"
+  get_your_openid: Maak een OpenID
+  openid_intro: "<p>OpenID is een gedeelde identiteitsdienst, waarmee je kunt inloggen op veel verschillende
+  websites met één enkele identiteit. Het is niet langer nodig verschillende gebruikersnamen en wachtwoorden voor elke site te hebben.</p>
+    <p>OpenID is een gedecentraliseerde, vrije en open standaard waarmee u zelf bepaalt hoeveel persoonlijke informatie wordt doorgegeven aan andere websites.</p>"
+  openid_intro_link: "<p>Begin hier and %{signup_link}.</p>"
+  signup_for_an_openid: maak een OpenID aan
+  login_to_proceed: Logt u alstublieft in om verder te gaan
+  host_requests_identification_you_need_to_login: "%{host} vraagt uw identificatie. U moet inloggen om verder te gaan."
+  login_intro: "Om in te loggen, ga alstublieft naar<strong>%{login_url}</strong>. De pagina die u nu ziet, wordt gebruikt om <strong>uzelf tegen <em>phishing</em> en online identiteitsdiefstal te beschermen.</strong>
+    en zou geen links moeten bebvatten.<br />Indien er wel links zijn, geeft u dan alstublieft aan ons door wie u hierheen zond."
+
+  # nav
+  my_identity: identiteit
+  my_profile: profiel
+  my_personas: personas
+  my_trusted_sites: vertrouwde sites
+  logout: uitloggen
+  current_verification_request: huidige aanvraag voor verificatie
+  login_link: inloggen
+  signup_link: aanmelden
+  help: help
+  get_help: hulp verkrijgen
+  openid_consumer_testsuite_title: OpenID Consumenten Testsuite
+  relying_party_title: Vertrouwende Partij
+
+  # passwords controller
+  password_reset_link_has_been_sent: Een wachtwoord resetlink werd naar uw emailadres gestuurd.
+  could_not_find_user_with_email_address: Kon geen gebruiker met dat emailadres vinden.
+  password_reset: Wachtwoord gereset.
+  password_mismatch: Wachtwoorden komen niet overeen.
+  password_cannot_be_blank: Wachtwoorden kunnen niet leeg zijn.
+  reset_code_invalid_try_again: Sorrie, uw wachtwoord resetcode is ongeldig. Controleert u het alstublieft en probeert u het opnieuw.
+
+  # passwords views
+  reset_password: wachtwoord resetten
+  forgot_password_title: Wachtwoord vergeten
+  please_enter_email: Voert u alstublieft uw emailadres in
+  submit_send: versturen
+
+  # personas controller
+  persona_successfully_created: De persona werd sucessvol aangemaakt.
+  persona_updated: De persona werd bijgewerkt.
+  persona_cannot_be_deleted: Deze persona kon niet verwijderd worden.
+
+  # personas views
+  edit_your_persona: Bewerk uw persona “%{title}”
+  personal_information: Persoonlijke informatie
+  professional_information: Zakelijke informatie
+  phone: Telefoon
+  instant_messaging: Expresberichten
+  other_information: Overige informatie
+
+  nickname: Nickname
+  email: Email
+  address: Adres
+  postcode: Postcode
+  city: Stad
+  state: Staat of Provincie
+  country: Land
+  language: Language
+  timezone: Tijdzone
+  gender: Geslacht
+  company_name: Bedrijfsnaam
+  job_title: Functie
+  phone_home: Telefoonnummer thuis
+  phone_mobile: Telefoonnummer mobiel
+  phone_fax: Faxnummer
+  phone_work: Telefoonnummer werk
+  biography: Biografie
+  title: Titel
+  fullname: Volledige naam
+  birth_date: Geboortedatum
+  address_business: Adres
+  address_additional: Extra informatie
+  address_additional_business: Extra
+  postcode_business: Postcode
+  city_business: Stad
+  state_business: Staat of Provincie
+  country_business: Land
+  im_aim: AIM
+  im_icq: ICQ
+  im_msn: MSN
+  im_yahoo: Yahoo
+  im_jabber: Jabber
+  im_skype: Skype
+  image_url: Afbeeldings URL
+  website_url: Website URL
+  blog_url: Blog URL
+  dob: Geboortedag
+  date_of_birth: Geboortedatum
+
+  my_personas_title: Mijn personas
+  personas_intro: "Personas definiëren bepaalde rollen van uw account.
+   U kunt bijvoorbeeld een persona voor privégebruik en een andere voor een zakelijke context hebben.
+   Wanneer een vertrouwende partij uw gegevens opvraagt, kunt u het persona kiezen waarvan u de data wilt overleggen."
+  edit: bewerken
+  delete: verwijderen
+  really_want_to_delete_persona: Weet u zeker dat u persona ”%{title}” wilt verwijderen?
+  create_a_new_persona: nieuwe persona aanmaken
+  create_a_new_persona_title: Maak een nieuwe persona aan
+
+  # sessions controller
+  you_are_logged_in: U bent nu ingelogd.
+  login_incorrect_or_account_not_yet_activated: De inloggegevens zijn incorrect of uw account is nog niet geactiveerd.
+  login_incorrect: De inloggegevens zijn incorrect.
+  you_are_now_logged_out: U bent nu uitgelogd.
+
+  # sessions views
+  login_title: Inloggen
+  your_openid: Your OpenID
+  cancel_this_request: deze aanvraag afbreken
+  remember_me: Onthoud me
+  login_submit: inloggen
+  i_forgot_my_password: Ik ben mijn wachtwoord vergeten
+
+  # server controller
+  this_is_openid_not_a_human_ressource: Dit is een OpenID server eindpunt, geen voor mensen leesbare bron.
+  identity_verification_request_invalid: De vereficatie van de identiteit is ongeldig.
+  service_provider_requires_reauthentication_last_login_too_long_ago: De dienst vereist een nieuwe autenticatie, omdat uw laatste inlog te lang geleden was.
+  login_to_verify_identity: Log alstublieft in om uw identiteit te verefiëren.
+
+  # server views
+  identity_request_from_host: Aanvraag voor identiteit van %{host}
+  identity_request_missing_persona: Alstublieft %{create_link} om deze aanvraag voor uw identiteit te beantwoorden.
+  trust_root_requests_some_personal_data: "%{trust_root} vraagt persoonlijke data aan."
+  trust_root_sends_some_personal_data: "%{trust_root} stuurt persoonlijke data:"
+  select_information_to_submit: Selecteer alstublieft de informatie die u wilt verzenden.
+  select_information_to_accept: Selecteer alstublieft de informatie die u wilt accepteren.
+  attributes_are_shown_from_persona: De getoonde attributen zijn van uw persona %{persona}.
+  attributes_will_be_added_to_persona: De attributen zullen aan uw persona %{persona} (%{choose_link}) worden toegevoegd.
+  to_submit_other_values_you_can_edit_or_choose: Om andere waarden te verzenden kun u een %{edit_link} of een %{choose_link}.
+  create_persona_link: persona aanmaken
+  edit_persona_link: persona bewerken
+  choose_other_persona: andere persona kiezen
+  trust_root_requires_authentication: "%{trust_root} vereist uw autenticatie."
+  choose_persona_title: Persona kiezen
+  choose_persona_submit: persona kiezen
+  create_new_persona_link: nieuwe persona aanmaken
+  requested_information_title: Aangevraagde informatie
+  sent_information_title: Verzonden informatie
+  disclosure: onthulling
+  accept: accepteer
+  current: huidige
+  required: vereist
+  optional: optioneel
+  not_supported: niet ondersteund
+  trust_site_only_this_time: Deze website enkel deze keer vertrouwen
+  always_trust_site: Deze website altijd vertrouwen
+  approve_request: Aanvraag goedkeuren
+  cancel_request: Aanvraag afbreken
+
+  # sites controllers
+  release_policy_for_site_updated: Het uitgiftebeleid van deze site is bijgewerkt.
+
+  # sites views
+  edit_link: bewerk
+  delete_link: verwijder
+  or: of
+  your_release_policy_for_site: Uw uitgiftebeleid voor %{site}
+  persona_label: Persona
+  choose_persona_submit: persona kiezen
+  property: eigenschap
+  value: waarde
+  update_release_policy_submit: uitgiftebeleid bijwerken
+  identity_request_answered_without_interaction: Aanvraag voor identiteit van de volgende sites, worden direct, zonder verdere interactie beantwoord.
+  alter_release_policies_here: U kunt het uitgiftebeleid voor deze sites hier bewerken.
+  really_want_to_delete_trust_for_site: Wilt u echt het vertrouwen voor site %{site} verwijderen?
+  no_entries_yet: Er zijn nog een items
+  ext0: Ext0
+  ext1: Ext1
+  ext2: Ext2
+
+  # yubikey controller
+  account_associated_with_yubico_identity: Uw account is geassocieerd met uw Yubico identiteit.
+  sorry_yubico_one_time_password_incorrect: Sorry, het opgegeven Yubico eenmalige wachtwoord is niet correct.
+  account_disassociated_from_yubico_identity: Uw account is niet langer geassocieerd met uw Yubico identiteit.

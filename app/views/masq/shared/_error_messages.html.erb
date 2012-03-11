@@ -1,0 +1,10 @@
+<% errors = objects.sum { |object| object.errors.full_messages.map { |msg| msg } } %>
+<% if errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% errors.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
