@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Masq::VERSION
   s.authors     = ["Dennis Reimann"]
   s.email       = ["mail@dennisreimann.de"]
-  s.homepage    = "http://github.com/dbloete/masq"
+  s.homepage    = "https://github.com/dbloete/masq"
   s.summary     = "Mountable Rails engine that provides OpenID server/identity provider functionality"
   s.description = "Masq supports the current OpenID specifications (OpenID 2.0) and supports SReg, AX (fetch and store requests) and PAPE as well as some custom additions like multifactor authentication using a yubikey"
 
