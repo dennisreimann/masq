@@ -2,4 +2,4 @@
 
 <p><%=t :please_activate_it_by_clicking_the_following_link %>:</p>
 
-<p><%= link_to t(:activation_link), :controller => 'accounts', :action => 'activate', :id => @account.activation_code, :only_path => false %></p>
+<p><%= link_to t(:activation_link), activate_account_url(:activation_code => @account.activation_code) %></p>

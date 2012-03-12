@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html>
 	<head>
 		<title><%=h page_title %></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -16,6 +16,7 @@
 		<%= csrf_meta_tags %>
 	</head>
 	<body>
+		<%= masq.root_url %>
 		<div id="head">
       <div class="wrap">
 				<h1><%= link_to Masq::Engine.config.masq['name'], root_path %></h1>

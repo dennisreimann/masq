@@ -68,7 +68,7 @@ module Masq
     end
 
     def render_error(status_code)
-      render :file => "#{Rails.root}/public/#{status_code}.html", :status => status_code, :layout => false
+      render :file => "#{Rails.root}/public/#{status_code}", :formats => [:html], :status => status_code, :layout => false
     end
 
     # Set site locale from

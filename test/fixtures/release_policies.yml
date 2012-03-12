@@ -1,0 +1,9 @@
+venteria_nickname:
+  site_id: 1
+  property: nickname
+  type_identifier: nickname
+
+venteria_email:
+  site_id: 1
+  property: email
+  type_identifier: email

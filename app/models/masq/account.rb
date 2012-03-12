@@ -22,6 +22,8 @@ module Masq
 
     before_save   :encrypt_password
     before_create :make_activation_code
+    after_create  :create_default_persona
+    after_save    :deliver_forgot_password
 
     attr_accessible :login, :email, :password, :password_confirmation, :public_persona_id, :yubikey_mandatory
     attr_accessor :password
@@ -160,8 +162,8 @@ module Masq
 
     def forgot_password!
       @forgotten_password = true
-      self.make_password_reset_code
-      self.save
+      make_password_reset_code
+      save
     end
 
     # First update the password_reset_code before setting the
@@ -233,6 +235,21 @@ module Masq
     def self.verify_yubico_otp(otp)
       yubico = Yubico.new(Masq::Engine.config.masq['yubico']['id'], Masq::Engine.config.masq['yubico']['api_key'])
       yubico.verify(otp) == Yubico::E_OK
+    end
+
+    def create_default_persona
+      if Masq::Engine.config.masq['send_activation_mail']
+        AccountMailer.signup_notification(self).deliver
+      else
+        activate!
+      end
+      self.public_persona = self.personas.build(:title => "Standard")
+      self.public_persona.deletable = false
+      self.save!
+    end
+
+    def deliver_forgot_password
+      AccountMailer.forgot_password(self).deliver if recently_forgot_password?
     end
 
   end

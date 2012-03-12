@@ -2,7 +2,7 @@
 default: &default
   send_activation_mail: true
   trust_basic_auth: false
-  disable_registration: true
+  disable_registration: false
   can_change_password: true
   can_disable_account: true
   can_use_yubikey: true

@@ -1,0 +1,11 @@
+venteria:
+  id: 1
+  account_id: 1
+  persona_id: 1
+  url: http://venteria.com/
+
+blog:
+  id: 2
+  account_id: 1
+  persona_id: 2
+  url: http://blog.dopefreshtight.de/

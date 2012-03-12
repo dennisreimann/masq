@@ -1,0 +1,28 @@
+public:
+  id: 1
+  account_id: 1
+  title: public
+  nickname: dennisreimann
+  email: mail@dennisreimann.de
+  fullname: Dennis Reimann
+  postcode: 28199
+  country: DE
+  language: DE
+  timezone: Europe/Berlin
+  gender: M
+
+private:
+  id: 2
+  account_id: 1
+  title: private
+  nickname: Dennis
+  email: dennis@innovated.de
+  fullname: Dennis Reimann
+  postcode: 28199
+  country: DE
+  language: DE
+  timezone: Europe/Berlin
+  gender: M
+  dob_day: 10
+  dob_month: 01
+  dob_year: 1982
