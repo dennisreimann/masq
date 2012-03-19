@@ -1,5 +1,3 @@
-require File.expand_path("../../masq/test_helper.rb",  __FILE__)
-
 class ActiveSupport::TestCase
   self.fixture_path = File.expand_path("../../../fixtures",  __FILE__)
 
@@ -13,6 +11,5 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-  include Masq::Engine.routes_url_helpers
   include Masq::TestHelper
 end

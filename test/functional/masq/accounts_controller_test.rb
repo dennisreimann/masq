@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Masq
   class AccountsControllerTest < ActionController::TestCase
+    include Masq::Engine.routes_url_helpers
+
     fixtures :accounts
 
     def test_should_allow_signup_if_enabled

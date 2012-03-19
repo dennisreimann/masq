@@ -2,9 +2,11 @@ require 'test_helper'
 
 module Masq
   class InfoControllerTest < ActionController::TestCase
+    include Masq::Engine.routes_url_helpers
+
     def test_should_set_yadis_header_on_homepage
       get :index
-      assert_match server_url(:format => :xrds), @response.headers['X-XRDS-Location']
+      assert_match server_url(:format => :xrds, :host => Masq::Engine.config.masq['host']), @response.headers['X-XRDS-Location']
     end
 
     def test_should_show_registration_link_if_enabled

@@ -254,16 +254,6 @@ module Masq
       assert (not @account.authenticated?("test" + yubico_otp))
     end
 
-    def test_should_be_able_to_authenticate_with_a_yubikey_if_can_use_yubikey_is_enabled
-      Masq::Engine.config.masq['can_use_yubikey'] = true
-      @account = accounts(:standard)
-      yubico_otp = 'x' * 44
-      @account.yubico_identity = yubico_otp[0..11]
-      @account.yubikey_mandatory = true
-      assert @account.save
-      assert (not @account.authenticated?("test" + yubico_otp))
-    end
-
     def test_should_not_be_able_to_authenticate_with_a_yubikey_if_it_does_not_match_the_yubico_identity
       Masq::Engine.config.masq['can_use_yubikey'] = true # makes no sense without
       @account = accounts(:standard)

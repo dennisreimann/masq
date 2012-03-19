@@ -15,7 +15,7 @@
 <% if @site.persona %>
 <%= t(:select_information_to_submit) %></p>
 <p class="note"><%= t(:attributes_are_shown_from_persona, :persona => "<strong>#{h @site.persona.title}</strong>").html_safe %><br />
-<%= t(:to_submit_other_values_you_can_edit_or_choose, 
+<%= t(:to_submit_other_values_you_can_edit_or_choose,
   :edit_link => link_to(t(:edit_persona_link), edit_account_persona_path(@site.persona, :return => decide_path(:persona_id => @site.persona.id))),
   :choose_link => link_to_function(t(:choose_other_persona), 'Element.toggle("persona_select")')).html_safe %></p>
 <% else %>
@@ -35,11 +35,11 @@
 		</select>
 	</div>
 	<div>
-		<%= submit_tag t(:choose_persona_submit) %> or
+		<%= submit_tag t(:choose_persona_submit) %> <%= t(:or) %>
 		<%= link_to t(:create_new_persona_link), new_account_persona_path(:return => decide_path) %>
 	</div>
 	<% end %>
-	
+
 <% end if sreg_request || ax_fetch_request || ax_store_request %>
 
 <%= form_for @site, :url => complete_path do |f| %>
@@ -61,7 +61,7 @@
 		</tr>
 		<% end if sreg_request %>
 		<% ax_fetch_request.attributes.each do |property| %>
-		<% supported = !Persona.attribute_name_for_type_uri(property.type_uri).nil? %>
+		<% supported = !Masq::Persona.attribute_name_for_type_uri(property.type_uri).nil? %>
 		<tr>
 			<td><%= label_tag "site_ax_fetch_#{property.ns_alias}", property_label_text(property.ns_alias) %></td>
 			<td><%= label_tag "site_ax_fetch_#{property.ns_alias}", supported ? @site.persona.property(property.type_uri) : t(:not_supported), :class => supported ? nil : 'note' %></td>
@@ -74,7 +74,7 @@
 		<% end if ax_fetch_request %>
 	</table>
 	<% end %>
-	
+
 	<% if ax_store_request %>
 	<table cellspacing="0">
     <tr>
@@ -83,7 +83,7 @@
 			<th class="accept"><%= t(:accept) %></th>
 		</tr>
 		<% ax_store_request.data.each do |type_uri, value| %>
-		<% if attribute = Persona.attribute_name_for_type_uri(type_uri) %>
+		<% if attribute = Masq::Persona.attribute_name_for_type_uri(type_uri) %>
 		<tr>
 			<td><%= label_tag "site_ax_store_#{attribute}", property_label_text_for_type_uri(type_uri) %></td>
 			<td><%= label_tag "site_ax_store_#{attribute}", value %></td>
@@ -97,13 +97,13 @@
 		<% end %>
 	</table>
 	<% end %>
-	
+
 	<div>
 		<% if sreg_request || ax_fetch_request || ax_store_request %>
 		<%= f.hidden_field :persona_id %>
 		<%= f.hidden_field :url %>
 		<% end %>
-		
+
 		<% if sreg_request || ax_fetch_request %>
 		<%= submit_tag t(:trust_site_only_this_time), :name => 'temporary', :class => 'space' %>
 		<%= submit_tag t(:always_trust_site), :name => 'always', :class => 'space' %>
@@ -112,6 +112,6 @@
 		<% end %>
 		<%= submit_tag t(:cancel_request), :name => 'cancel' %>
 	</div>
-	
+
 <% end unless current_account.personas.empty? %>
 

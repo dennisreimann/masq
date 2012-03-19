@@ -2,7 +2,13 @@ require 'test_helper'
 
 module Masq
   class PasswordsControllerTest < ActionController::TestCase
+    include Masq::Engine.routes_url_helpers
+
     fixtures :accounts
+
+    def setup
+      Masq::Engine.config.masq['can_change_password'] = true
+    end
 
     def test_should_get_new
       get :new
@@ -10,18 +16,16 @@ module Masq
     end
 
     def test_should_display_error_when_email_could_not_be_found
-      Masq::Engine.config.masq['can_change_password'] = true # makes no sense without
       post :create, :email => 'doesnotexist@somewhere.com'
       assert flash[:alert]
       assert_template 'new'
     end
 
     def test_should_reset_password_when_email_could_be_found
-      Masq::Engine.config.masq['can_change_password'] = true # makes no sense without
       @account = accounts(:standard)
       post :create, :email => @account.email
       assert_not_nil @account.reload.password_reset_code
-      assert_redirected_to login_url
+      assert_redirected_to login_path
       assert flash[:notice]
     end
 
@@ -33,20 +37,19 @@ module Masq
       assert_response :not_found
     end
 
-    # def test_should_redirect_to_new_if_code_is_missing
-    #   get :edit
-    #   assert_redirected_to forgot_password_path
-    #   assert flash[:alert]
-    # end
-    #
-    # def test_should_redirect_to_new_if_code_is_invalid
-    #   get :edit, :id => 'doesnotexist'
-    #   assert_redirected_to forgot_password_path
-    #   assert flash[:alert]
-    # end
+    def test_should_redirect_to_new_if_code_is_missing
+      get :edit
+      assert_redirected_to forgot_password_path
+      assert flash[:alert]
+    end
+
+    def test_should_redirect_to_new_if_code_is_invalid
+      get :edit, :id => 'doesnotexist'
+      assert_redirected_to forgot_password_path
+      assert flash[:alert]
+    end
 
     def test_should_reset_the_password_when_it_matches_confirmation
-      Masq::Engine.config.masq['can_change_password'] = true # makes no sense without
       @account = accounts(:standard)
       old_crypted_password = @account.crypted_password
       @account.forgot_password!
@@ -54,7 +57,7 @@ module Masq
         :password => 'v4l1d_n3w_pa$$w0rD',
         :password_confirmation => 'v4l1d_n3w_pa$$w0rD'
       assert_not_equal old_crypted_password, @account.reload.crypted_password
-      assert_redirected_to login_url
+      assert_redirected_to login_path
       assert flash[:notice]
     end
 
@@ -71,7 +74,6 @@ module Masq
     end
 
     def test_should_not_reset_the_password_if_it_is_blank
-      Masq::Engine.config.masq['can_change_password'] = true # makes no sense without
       @account = accounts(:standard)
       old_crypted_password = @account.crypted_password
       @account.forgot_password!
@@ -85,7 +87,6 @@ module Masq
     end
 
     def test_should_not_reset_the_password_if_it_does_not_match_confirmation
-      Masq::Engine.config.masq['can_change_password'] = true # makes no sense without
       @account = accounts(:standard)
       old_crypted_password = @account.crypted_password
       @account.forgot_password!

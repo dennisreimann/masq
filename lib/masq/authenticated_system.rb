@@ -105,9 +105,11 @@ module Masq
     def auth_type_used
       @auth_type_used
     end
+
     def auth_type_used= t
       @auth_type_used = t
     end
+
     # Called from #current_account.  Now, attempt to login by basic authentication information.
     def login_from_basic_auth
       authenticate_with_http_basic do |accountname, password|

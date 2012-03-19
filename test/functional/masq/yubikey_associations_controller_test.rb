@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Masq
   class YubikeyAssociationsControllerTest < ActionController::TestCase
+    include Masq::Engine.routes_url_helpers
+
     fixtures :accounts
 
     def test_should_associate_an_account_with_the_given_yubikey
@@ -12,7 +14,7 @@ module Masq
       post :create, :yubico_otp => yubico_otp
       @account.reload
       assert_equal 'x' * 12, @account.yubico_identity
-      assert_redirected_to edit_account_url
+      assert_redirected_to edit_account_path
     end
 
     def test_should_remove_an_association
@@ -21,7 +23,7 @@ module Masq
       delete :destroy
       @account.reload
       assert_nil @account.yubico_identity
-      assert_redirected_to edit_account_url
+      assert_redirected_to edit_account_path
     end
 
   end

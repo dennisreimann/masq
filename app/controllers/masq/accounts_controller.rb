@@ -61,9 +61,7 @@ module Masq
     end
 
     def destroy
-      unless Masq::Engine.config.masq['can_disable_account']
-        return render_404
-      end
+      return render_404 unless Masq::Engine.config.masq['can_disable_account']
 
       @account = current_account
       if @account.authenticated?(params[:confirmation_password])
@@ -91,9 +89,7 @@ module Masq
     end
 
     def change_password
-      unless Masq::Engine.config.masq['can_change_password']
-        return render_404
-      end
+      return render_404 unless Masq::Engine.config.masq['can_change_password']
 
       if Account.authenticate(current_account.login, params[:old_password])
         if ((params[:password] == params[:password_confirmation]) && !params[:password_confirmation].blank?)

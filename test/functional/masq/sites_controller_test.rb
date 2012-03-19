@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Masq
   class SitesControllerTest < ActionController::TestCase
+    include Masq::Engine.routes_url_helpers
+
     fixtures :accounts, :sites, :personas
 
     def test_should_require_login_for_index

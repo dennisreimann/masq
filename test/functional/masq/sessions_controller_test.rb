@@ -2,6 +2,8 @@ require 'test_helper'
 
 module Masq
   class SessionsControllerTest < ActionController::TestCase
+    include Masq::Engine.routes_url_helpers
+
     fixtures :accounts
 
     def test_should_save_account_id_in_session_after_successful_login
@@ -12,14 +14,14 @@ module Masq
     def test_should_redirect_to_users_identity_page_after_successful_login
       account = accounts(:standard)
       post :create, :login => account.login, :password => 'test'
-      assert_redirected_to identity_url(account)
+      assert_redirected_to identity_url(account, :host => Masq::Engine.config.masq['host'])
     end
 
     def test_should_redirect_to_users_on_login_if_allready_logged_in
       login_as :standard
       account = accounts(:standard)
       get :new
-      assert_redirected_to identity_url(account)
+      assert_redirected_to identity_url(account, :host => Masq::Engine.config.masq['host'])
     end
 
     def test_should_set_cookie_with_auth_token_if_user_chose_to_be_remembered
@@ -79,7 +81,7 @@ module Masq
     def test_should_redirect_to_homepage_after_logout
       login_as :standard
       get :destroy
-      assert_redirected_to '/'
+      assert_redirected_to root_path
     end
 
     def test_should_delete_token_on_logout
@@ -118,20 +120,20 @@ module Masq
       assert !@account.last_authenticated_with_yubikey
     end
 
-    # def test_should_authenticate_with_password_and_yubico_otp
-    #   @account = accounts(:with_yubico_identity)
-    #   yubico_otp = @account.yubico_identity + 'x' * 32
-    #   Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
-    #   post :create, :login => @account.login, :password => 'test' + yubico_otp
-    #   @account.reload
-    #   assert_not_nil @account.last_authenticated_at
-    #   assert @account.last_authenticated_with_yubikey
-    # end
+    def test_should_authenticate_with_password_and_yubico_otp
+      @account = accounts(:with_yubico_identity)
+      yubico_otp = @account.yubico_identity + 'x' * 32
+      Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
+      post :create, :login => @account.login, :password => 'test' + yubico_otp
+      @account.reload
+      assert_not_nil @account.last_authenticated_at
+      assert @account.last_authenticated_with_yubikey
+    end
 
     def test_should_disallow_password_only_login_when_yubikey_is_mandatory
       account = accounts(:with_yubico_identity)
       post :create, :login => account.login, :password => 'test'
-      assert_redirected_to login_url
+      assert_redirected_to login_path
       assert flash.any?
     end
 
