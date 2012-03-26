@@ -1,4 +1,8 @@
 language: ruby
+env:
+  - 'DB_ADAPTER=mysql2 DB_USERNAME=root'
+  - 'DB_ADAPTER=sqlite3'
 rvm:
   - 1.9.2
   - 1.9.3
+script: bundle exec rake app:masq:test:ci
