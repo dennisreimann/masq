@@ -1,5 +1,7 @@
 # Masq OpenID Server
 
+[![Build Status](https://secure.travis-ci.org/dbloete/masq.png)](http://travis-ci.org/dbloete/masq)
+
 *Please note:* Currently this project is in a WORK IN PROGRESS state.
 I am moving over the masquerade code to this engine approach.
 
