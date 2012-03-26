@@ -4,6 +4,12 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rails/test_help"
 
+begin
+  require 'turn/autorun'
+  Turn.config.format = :dot
+rescue LoadError
+end
+
 Rails.backtrace_cleaner.remove_silencers!
 
 module Masq
