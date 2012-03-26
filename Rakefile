@@ -27,11 +27,40 @@ Bundler::GemHelper.install_tasks
 
 require 'rake/testtask'
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
+namespace :test do |ns|
+  desc "Prepare tests"
+  task :prepare do
+    Rails.env = 'test'
+    Rake::Task['db:setup'].invoke
+  end
+
+  tests = %w(unit functional integration)
+
+  tests.each do |type|
+    desc "Run #{type} tests"
+    Rake::TestTask.new(type) do |t|
+      t.libs << 'lib'
+      t.libs << 'test'
+      t.test_files = FileList["test/#{type}/**/*_test.rb"]
+      t.verbose = false
+    end
+  end
+
+  desc "Run all tests"
+  Rake::TestTask.new('all') do |t|
+    files = []
+    tests.each { |type| files += FileList["test/#{type}/**/*_test.rb"] }
+
+    t.libs << 'lib'
+    t.libs << 'test'
+    t.test_files = files
+    t.verbose = false
+  end
+
 end
+
+Rake::Task['test'].clear
+desc "Run tests"
+task :test => %w[test:prepare test:all]
 
 task :default => :test
