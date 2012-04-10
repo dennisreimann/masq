@@ -22,9 +22,11 @@ _If you want to upgrade from masquerade, please skip this part and see the Upgra
     * `gem 'masq'`
     * `bundle install`
 
-2. Copy the `config/masq.example.yml` from this gem to your app into `config/masq.yml` and edit the settings.
+2. Copy the configuration and edit it:
+    * `bundle exec rake masq:install:config`
+    * `$EDITOR config/masq.yml`
 
-3. Copy over the migrations and migrate:
+3. Copy the migrations and migrate:
     * `bundle exec rake masq:install:migrations`
     * `bundle exec rake db:migrate`
 
@@ -44,7 +46,7 @@ _If you want to upgrade from masquerade, please skip this part and see the Upgra
     * `gem 'masq'`
     * `bundle install`
 
-3. Copy over your existing masquerade config file from `config/app_config.yml` to the new apps `config/masq.yml`
+3. Copy your existing masquerade config file from `config/app_config.yml` to the new apps `config/masq.yml`
 
 4. Change the existing database tables to be prefixed with *masq_*. We will supply a migration for that later on, for now you'll have to do this by hand.
 
