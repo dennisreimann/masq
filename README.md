@@ -48,7 +48,10 @@ _If you want to upgrade from masquerade, please skip this part and see the Upgra
 
 3. Copy your existing masquerade config file from `config/app_config.yml` to the new apps `config/masq.yml`
 
-4. Change the existing database tables to be prefixed with *masq_*. We will supply a migration for that later on, for now you'll have to do this by hand.
+4. Copy the migrations and migrate:
+    * PLEASE BACKUP YOUR DATABASE FIRST!
+    * `bundle exec rake masq:install:migrations`
+    * `bundle exec rake db:migrate`
 
 5. Configure the routes by mounting the masq engine:
 
