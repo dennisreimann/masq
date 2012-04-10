@@ -79,12 +79,23 @@ Relying Party to the server.
 Use the options provided by the OpenID verification form to test several aspects of the
 client-server communication (like requesting simple registration data).
 
-## Introduction
+## Development
+
+### Introduction
 
 The main functionality is in the server controller, which is the endpoint for incoming
 OpenID requests. The server controller is supposed to only interact with relying parties
 a.k.a. consumer websites. It includes the OpenidServerSystem module, which provides some
 handy methods to access and answer OpenID requests.
+
+### Testing
+
+You can run the tests with Rake:
+    * `DB_ADAPTER=sqlite3 bundle exec rake app:masq:test:ci`
+    * `DB_ADAPTER=mysql2 bundle exec rake app:masq:test:ci`
+    * `DB_ADAPTER=postgresql bundle exec rake app:masq:test:ci`
+
+The Rake task configures the database.yml for the chosen adapter.
 
 ## Contact
 
