@@ -3,7 +3,10 @@
 [![Build Status](https://secure.travis-ci.org/dbloete/masq.png)](http://travis-ci.org/dbloete/masq)
 
 *Please note:* Currently this project is in a WORK IN PROGRESS state.
-I am moving over the masquerade code to this engine approach.
+I have moved the masquerade code to this engine approach and think this should be the future of
+the project, as it supports running standalone as well as integrating it into other Rails
+applications. Nevertheless I'd like to get more feedback from people that tried upgrading from
+a masquerade installation before masq hits 1.0
 
 Masq is a mountable Rails engine that provides OpenID server/identity provider functionality.
 It is the successor of the stand-alone Rails application [masquerade](http://github.com/dbloete/masquerade/).
