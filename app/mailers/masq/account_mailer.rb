@@ -1,6 +1,6 @@
 module Masq
   class AccountMailer < ActionMailer::Base
-    default :from => Masq::Engine.config.masq['mailer']['from']
+    default :from => Masq::Engine.config.masq['email']
     default_url_options[:host] = Masq::Engine.config.masq['host']
 
     def signup_notification(account)

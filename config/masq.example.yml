@@ -15,13 +15,6 @@ default: &default
   email: info@your.domain.com
   use_ssl: false
   email_as_login: false
-  session:
-    key: openidserver_session_id
-    secret: replacethiswithyourowntopsecretsessionsecretsothatnoonewillknowit
-  mailer:
-    address: localhost
-    domain: your.domain.com
-    from: info@your.domain.com
   yubico:
     id: 99
     api_key: youryubicoapikey
