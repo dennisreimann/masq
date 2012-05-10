@@ -136,7 +136,7 @@ module Masq
     # Returns the OpenIdRequest
     def save_checkid_request
       clear_checkid_request
-      request = OpenIdRequest.create(:parameters => openid_params)
+      request = OpenIdRequest.create!(:parameters => openid_params)
       session[:request_token] = request.token
 
       request
