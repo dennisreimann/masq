@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "minitest"
   s.add_development_dependency "turn"
   s.add_development_dependency "mocha"
+  s.add_development_dependency "guard-minitest"
 end

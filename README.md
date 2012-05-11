@@ -67,13 +67,13 @@ _If you want to upgrade from masquerade, please skip this part and see the Upgra
 You can test the functionality in your local environment starting two instances: One as
 your Identity Provider/OpenID Server and another one as Relying Party.
 
-  * `rails server`
-  * `rails server -p 3001`
+    * `rails server`
+    * `rails server -p 3001`
 
 Open your browser with these urls (assumes you mounted the engine at */masq*):
 
-* [http://localhost:3000/masq](http://localhost:3000/masq) (Identity Provider)
-* [http://localhost:3001/masq/consumer](http://localhost:3001/masq/consumer) (Relying Party testsuite)
+    * [http://localhost:3000/masq](http://localhost:3000/masq) (Identity Provider)
+    * [http://localhost:3001/masq/consumer](http://localhost:3001/masq/consumer) (Relying Party testsuite)
 
 First you have to create an account at the Identity Provider, after that you will be able
 to use the issued OpenID URL (`http://localhost:3000/masq/YOUR_LOGIN`) to send requests from the
@@ -99,6 +99,9 @@ You can run the tests with Rake:
     * `DB_ADAPTER=postgresql bundle exec rake app:masq:test:ci`
 
 The Rake task configures the database.yml for the chosen adapter.
+
+In case you prefer running the tests continuously, use Guard:
+    * `bundle exec guard`
 
 ## Contact
 
