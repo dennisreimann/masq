@@ -1,6 +1,6 @@
 <h2><%=t :my_profile %></h2>
 
-<%= error_messages_for @account %>
+<%= error_messages_for current_account %>
 
 <%= form_for :account, :url => account_path, :html => { :method => :put } do |f| %>
 	<% unless email_as_login? -%>
@@ -12,7 +12,7 @@
 
 	<div class="row">
 		<%= f.label :public_persona_id, t(:public_persona) %>
-  	<%= f.select :public_persona_id, @account.personas.map{ |p| [ p.title, p.id ]}, :include_blank => true %>
+  	<%= f.select :public_persona_id, current_account.personas.map{ |p| [ p.title, p.id ]}, :include_blank => true %>
 	</div>
 
 	<div>
@@ -43,10 +43,10 @@
 
 <% if Masq::Engine.config.masq['can_use_yubikey'] %>
   <h2><%=t :my_yubikey %></h2>
-  <% if @account.yubico_identity? %>
+  <% if current_account.yubico_identity? %>
   <%= form_tag account_yubikey_association_path, :method => :delete do %>
     <div class="row">
-      <p><%=t :your_account_is_associated_with_the_yubico_identity %> <strong><%= @account.yubico_identity %></strong></p>
+      <p><%=t :your_account_is_associated_with_the_yubico_identity %> <strong><%= current_account.yubico_identity %></strong></p>
       <p class="note"><%=t :yubikey_how_to_use %></p>
     </div>
     <div>
@@ -57,15 +57,15 @@
   <%= form_for :account, :url => account_path, :html => { :method => :put } do |f| %>
     <div>
       <p>
-        <% if @account.yubikey_mandatory? %>
+        <% if current_account.yubikey_mandatory? %>
          <%=t :your_yubikey_is_mandatory_for_login %>
         <% else %>
          <%=t :your_yubikey_is_optional_for_login %>
         <% end %>
       </p>
       <div>
-        <%= f.hidden_field :yubikey_mandatory, :value => (@account.yubikey_mandatory ? 0 : 1)  %>
-        <%= submit_tag( @account.yubikey_mandatory ? t(:make_my_yubikey_optional) : t(:make_my_yubikey_mandatory) ) %>
+        <%= f.hidden_field :yubikey_mandatory, :value => (current_account.yubikey_mandatory ? 0 : 1)  %>
+        <%= submit_tag( current_account.yubikey_mandatory ? t(:make_my_yubikey_optional) : t(:make_my_yubikey_mandatory) ) %>
       </div>
     </div>
   <% end %>

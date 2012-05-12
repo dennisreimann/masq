@@ -5,8 +5,8 @@ module Masq
 
     # Forgot password
     def create
-      if @account = Account.find_by_email(params[:email], :conditions => 'activation_code IS NULL')
-        @account.forgot_password!
+      if account = Account.where(:email => params[:email], :activation_code => nil).first
+        account.forgot_password!
         redirect_to login_path, :notice => t(:password_reset_link_has_been_sent)
       else
         flash[:alert] = t(:could_not_find_user_with_email_address)

@@ -1,10 +1,11 @@
 module Masq
   class AccountsController < ApplicationController
+    before_filter :check_disabled_registration, :only => [:new, :create]
     before_filter :login_required, :except => [:show, :new, :create, :activate, :resend_activation_email]
     before_filter :detect_xrds, :only => :show
 
     def show
-      @account = Account.first(:conditions => ['login = ? AND enabled = ?', params[:account], true])
+      @account = Account.where(:login => params[:account], :enabled => true).first
       raise ActiveRecord::RecordNotFound if @account.nil?
 
       respond_to do |format|
@@ -16,44 +17,31 @@ module Masq
     end
 
     def new
-      return render_404 if Masq::Engine.config.masq['disable_registration']
       @account = Account.new
     end
 
     def create
-      return render_404 if Masq::Engine.config.masq['disable_registration']
-
       cookies.delete :auth_token
       attrs = params[:account]
+      attrs[:login] = attrs[:email] if email_as_login?
 
-      if email_as_login?
-        attrs[:login] = attrs[:email]
-      end
-
-      @account = Account.new(attrs)
-      begin
-        @account.save!
+      if @account = Account.create(attrs)
         if Masq::Engine.config.masq['send_activation_mail']
           redirect_to login_path, :notice => t(:thanks_for_signing_up_activation_link)
         else
           redirect_to login_path, :notice => t(:thanks_for_signing_up)
         end
-      rescue ActiveRecord::RecordInvalid
+      else
         render :action => 'new'
       end
     end
 
-    def edit
-      @account = current_account
-    end
-
     def update
-      @account = current_account
       attrs = params[:account]
       attrs.delete(:email) if email_as_login?
       attrs.delete(:login)
 
-      if @account.update_attributes(attrs)
+      if current_account.update_attributes(attrs)
         redirect_to edit_account_path(:account => current_account), :notice => t(:profile_updated)
       else
         render :action => 'edit'
@@ -63,9 +51,8 @@ module Masq
     def destroy
       return render_404 unless Masq::Engine.config.masq['can_disable_account']
 
-      @account = current_account
-      if @account.authenticated?(params[:confirmation_password])
-        @account.disable!
+      if current_account.authenticated?(params[:confirmation_password])
+        current_account.disable!
         current_account.forget_me
         cookies.delete :auth_token
         reset_session
@@ -123,6 +110,10 @@ module Masq
     end
 
     protected
+
+    def check_disabled_registration
+      render_404 if Masq::Engine.config.masq['disable_registration']
+    end
 
     def detect_xrds
       if params[:account] =~ /\A(.+)\.xrds\z/

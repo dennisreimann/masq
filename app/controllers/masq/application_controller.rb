@@ -17,11 +17,6 @@ module Masq
 
     protected
 
-    # before_filter for every account-based controller
-    def find_account
-      @account = current_account
-    end
-
     def endpoint_url
       server_url(:protocol => scheme)
     end

@@ -1,13 +1,12 @@
 module Masq
   class SitesController < ApplicationController
     before_filter :login_required
-    before_filter :find_account
-    before_filter :find_site, :only => [:edit, :update, :destroy]
-    before_filter :find_persona, :only => [:edit, :update, :destroy]
     before_filter :find_personas, :only => [:create, :edit, :update]
 
+    helper_method :site, :persona
+
     def index
-      @sites = @account.sites.all(:include => :persona, :order => :url)
+      @sites = current_account.sites.includes(:persona).order(:url)
 
       respond_to do |format|
         format.html
@@ -15,14 +14,14 @@ module Masq
     end
 
     def edit
-      @site.persona = @account.personas.find(params[:persona_id]) if params[:persona_id]
+      site.persona = current_account.personas.find(params[:persona_id]) if params[:persona_id]
     end
 
     def update
       respond_to do |format|
-        if @site.update_attributes(params[:site])
+        if site.update_attributes(params[:site])
           flash[:notice] = t(:release_policy_for_site_updated)
-          format.html { redirect_to edit_account_site_path(@site) }
+          format.html { redirect_to edit_account_site_path(site) }
         else
           format.html { render :action => 'edit' }
         end
@@ -30,7 +29,7 @@ module Masq
     end
 
     def destroy
-      @site.destroy
+      site.destroy
 
       respond_to do |format|
         format.html { redirect_to account_sites_path }
@@ -39,16 +38,16 @@ module Masq
 
     private
 
-    def find_site
-      @site = @account.sites.find(params[:id])
+    def site
+      @site ||= current_account.sites.find(params[:id])
     end
 
-    def find_persona
-      @persona = @site.persona
+    def persona
+      @persona ||= site.persona
     end
 
     def find_personas
-      @personas = @account.personas.all(:order => 'title')
+      @personas = current_account.personas.order(:title)
     end
   end
 end

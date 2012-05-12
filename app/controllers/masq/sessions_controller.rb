@@ -4,9 +4,7 @@ module Masq
     after_filter :set_login_cookie, :only => :create
 
     def new
-      if logged_in?
-        redirect_after_login
-      end
+      redirect_after_login if logged_in?
     end
 
     def create
@@ -16,7 +14,6 @@ module Masq
         redirect_after_login
       else
         a = Account.find_by_login(params[:login])
-
         if a.nil?
           redirect_to login_path, :alert => t(:login_incorrect)
         elsif a.active? && a.enabled?
@@ -39,11 +36,11 @@ module Masq
     private
 
     def set_login_cookie
-      if logged_in? && params[:remember_me] == '1'
-        self.current_account.remember_me
+      if logged_in? and params[:remember_me] == '1'
+        current_account.remember_me
         cookies[:auth_token] = {
-          :value => self.current_account.remember_token,
-          :expires => self.current_account.remember_token_expires_at }
+          :value => current_account.remember_token,
+          :expires => current_account.remember_token_expires_at }
       end
     end
 
