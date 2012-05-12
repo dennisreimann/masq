@@ -1,7 +1,7 @@
 guard 'minitest' do
   # with Minitest::Unit
-  watch(%r|^test/(.*)\/?test_(.*)\.rb|)
-  watch(%r|^lib/masq.*\.rb|)              { "test" }
+  watch(%r|^test/(.*)\/?(.*)_test\.rb|)
+  watch(%r|^lib/masq.*\.rb|)                { "test" }
   watch(%r|^test/test_helper\.rb|)          { "test" }
 
   # Rails
@@ -11,4 +11,5 @@ guard 'minitest' do
   watch(%r|^app/models/(.*)/(.*)\.rb|)      { |m| "test/unit/#{m[1]}/#{m[2]}_test.rb" }
   watch(%r|^app/mailers/(.*)/(.*)\.rb|)     { |m| "test/unit/#{m[1]}/#{m[2]}_test.rb" }
   watch(%r|^app/views/(.*)/(.*)|)           { |m| "test/integration" }
+  watch(%r|^config/routes\.rb|)             { |m| "test/integration" }
 end
