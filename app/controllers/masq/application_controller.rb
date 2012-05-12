@@ -15,8 +15,6 @@ module Masq
     helper_method :extract_host, :extract_login_from_identifier, :checkid_request,
       :identifier, :endpoint_url, :scheme
 
-    before_filter :set_locale
-
     protected
 
     # before_filter for every account-based controller
@@ -69,17 +67,6 @@ module Masq
 
     def render_error(status_code)
       render :file => "#{Rails.root}/public/#{status_code}", :formats => [:html], :status => status_code, :layout => false
-    end
-
-    # Set site locale from
-    # * params[:locale]
-    # * HTTP_ACCEPT_LANGUAGE header
-    #
-    # If desired locale is not supported or nothing is set, fallback to English ("en")
-    def set_locale
-      locale = params[:locale]
-      locale ||= request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first if request.env['HTTP_ACCEPT_LANGUAGE']
-      I18n.locale = (locale && I18n.available_locales.include?(locale.to_sym)) ? locale : I18n.default_locale
     end
 
     private
