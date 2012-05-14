@@ -11,6 +11,12 @@ group :development, :test do
       gem 'sqlite3'
     end
   end
+  gem 'minitest'
+  gem 'turn'
+  gem 'mocha'
+  gem 'ruby_gntp'
+  gem 'guard-minitest'
+  gem 'rb-fsevent', :require => false
 end
 
 gemspec
