@@ -125,6 +125,7 @@ development:
 test:
   <<: *default
   host: "test.host"
-  trusted_domains:
-    - trusted-domain.com
 
+production:
+  <<: *default
+  host: "myrealhost.com"
