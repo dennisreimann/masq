@@ -7,9 +7,7 @@ module Masq
 
     protect_from_forgery
 
-    rescue_from(
-      ::ActiveRecord::RecordNotFound,
-      ::AbstractController::ActionNotFound, :with => :render_404)
+    rescue_from ::ActiveRecord::RecordNotFound, :with => :render_404
     rescue_from ::ActionController::InvalidAuthenticityToken, :with => :render_422
 
     helper_method :extract_host, :extract_login_from_identifier, :checkid_request,
