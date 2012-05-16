@@ -24,14 +24,13 @@ module Masq
       cookies.delete :auth_token
       attrs = params[:account]
       attrs[:login] = attrs[:email] if email_as_login?
-
-      if @account = Account.create(attrs)
-        if Masq::Engine.config.masq['send_activation_mail']
-          redirect_to login_path, :notice => t(:thanks_for_signing_up_activation_link)
-        else
-          redirect_to login_path, :notice => t(:thanks_for_signing_up)
-        end
+      signup = Signup.create_account!(attrs)
+      if signup.succeeded?
+        redirect_to login_path, :notice => signup.send_activation_email? ?
+          t(:thanks_for_signing_up_activation_link) :
+          t(:thanks_for_signing_up)
       else
+        @account = signup.account
         render :action => 'new'
       end
     end

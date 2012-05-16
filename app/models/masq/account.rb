@@ -21,8 +21,6 @@ module Masq
     validates_exclusion_of :login, :in => %w[account session password help safe-login forgot_password reset_password login logout server consumer]
 
     before_save   :encrypt_password
-    before_create :make_activation_code
-    after_create  :create_default_persona
     after_save    :deliver_forgot_password
 
     attr_accessible :login, :email, :password, :password_confirmation, :public_persona_id, :yubikey_mandatory
@@ -59,6 +57,13 @@ module Masq
       activation_code.nil?
     end
 
+    def activate!
+      @activated = true
+      self.activated_at = Time.now.utc
+      self.activation_code = nil
+      self.save
+    end
+
     # True if the user has just been activated
     def pending?
       @activated
@@ -80,7 +85,12 @@ module Masq
         else
           pw = password
         end
-        a = Account.create!(:login => login, :password => pw, :password_confirmation => pw, :email => "#{login}@#{Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain']}")
+        signup = Signup.create_account!(
+          :login => login,
+          :password => pw,
+          :password_confirmation => pw,
+          :email => "#{login}@#{Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain']}")
+        a = signup.account if signup.succeeded?
       end
 
       if not a.nil? and a.active? and a.enabled
@@ -197,24 +207,11 @@ module Masq
       crypted_password.blank? || !password.blank?
     end
 
-    def make_activation_code
-      if Masq::Engine.config.masq['send_activation_mail']
-        self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
-      end
-    end
-
     def make_password_reset_code
       self.password_reset_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
     end
 
     private
-
-    def activate!
-      @activated = true
-      self.activated_at = Time.now.utc
-      self.activation_code = nil
-      self.save
-    end
 
     # Returns the first twelve chars from the Yubico OTP,
     # which are used to identify a Yubikey
@@ -235,17 +232,6 @@ module Masq
     def self.verify_yubico_otp(otp)
       yubico = Yubico.new(Masq::Engine.config.masq['yubico']['id'], Masq::Engine.config.masq['yubico']['api_key'])
       yubico.verify(otp) == Yubico::E_OK
-    end
-
-    def create_default_persona
-      if Masq::Engine.config.masq['send_activation_mail']
-        AccountMailer.signup_notification(self).deliver
-      else
-        activate!
-      end
-      self.public_persona = self.personas.build(:title => "Standard")
-      self.public_persona.deletable = false
-      self.save!
     end
 
     def deliver_forgot_password

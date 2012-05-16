@@ -10,11 +10,6 @@ module Masq
       @account = Account.new valid_account_attributes
     end
 
-    def test_should_initialize_activation_code_upon_creation
-      @account.save
-      assert_not_nil @account.reload.activation_code
-    end
-
     def test_should_require_login
       @account.login = nil
       assert_invalid @account, :login
@@ -76,24 +71,22 @@ module Masq
       assert_valid @account
     end
 
-    def test_should_assign_activation_code_on_create_if_send_activation_mail_is_enabled
-      Masq::Engine.config.masq['send_activation_mail'] = true
-      @account.save
-      assert_not_nil @account.activation_code
-    end
-
-    def test_should_not_assign_activation_code_on_create_if_send_activation_mail_is_disabled
-      Masq::Engine.config.masq['send_activation_mail'] = false
-      @account.save
-      assert_nil @account.activation_code
+    def test_should_create_account_on_demand_if_create_auth_ondemand_is_enabled
+      Masq::Engine.config.masq['create_auth_ondemand']['enabled'] = true
+      Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"
+      Account.authenticate('notexistingtestuser', 'somepassword')
+      account = Account.find_by_login('notexistingtestuser')
+      assert account.kind_of? Account
+      assert_equal 'notexistingtestuser', account.login
+      assert_equal 'notexistingtestuser@example.net', account.email
     end
 
     def test_should_find_and_activate_by_activation_token
-      @account.save
+      @account.update_attribute(:activation_code, 'openid123')
       assert_equal false, @account.active?
-      Account.find_and_activate!(@account.reload.activation_code)
+      Account.find_and_activate!('openid123')
       @account.reload
-      assert_equal true, @account.active?
+      assert @account.active?
       assert_not_nil @account.activated_at
     end
 
@@ -145,7 +138,7 @@ module Masq
       Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"
       Account.authenticate('notexistingtestuser', 'somepassword')
       account = Account.find_by_login('notexistingtestuser')
-      assert account.kind_of? Account
+      assert_kind_of Account, account
       assert_equal 'notexistingtestuser', account.login
       assert_equal 'notexistingtestuser@example.net', account.email
     end
@@ -209,10 +202,8 @@ module Masq
 
     def test_should_delete_associated_personas_on_destroy
       @account.save
-      # one default persona
-      assert_equal 1, @account.personas.size
       @persona = @account.personas.create(valid_persona_attributes)
-      assert_equal 2, @account.personas.size
+      assert_equal 1, @account.personas.size
       @account.destroy
       assert_nil Persona.find_by_id(@persona.id)
     end

@@ -5,30 +5,27 @@ module Masq
 
     def test_should_send_signup_notification_if_send_notification_mail_option_is_enabled
       Masq::Engine.config.masq['send_activation_mail'] = true
-      @account = Account.create valid_account_attributes
-
-      response = AccountMailer.signup_notification(@account)
-      assert_equal @account.email, response.to[0]
-      assert response.parts.size == 2
-      response.parts.each { |part| assert part.body.match(@account.activation_code) }
+      account = Account.new valid_account_attributes
+      account.activation_code = 'openid123'
+      response = AccountMailer.signup_notification(account)
+      assert_equal account.email, response.to[0]
+      response.parts.each { |part| assert part.body.match('openid123') }
     end
 
     def test_should_not_send_signup_notification_if_send_notification_mail_option_is_disabled
       Masq::Engine.config.masq['send_activation_mail'] = false
-      @account = Account.create valid_account_attributes
-
+      account = Account.new valid_account_attributes
       assert_raise RuntimeError, "send_activation_mail deactivated" do
-        AccountMailer.signup_notification(@account)
+        AccountMailer.signup_notification(account)
       end
     end
 
     def test_should_send_forgot_password
-      @account = Account.create valid_account_attributes
-      @account.forgot_password!
-      response = AccountMailer.forgot_password(@account)
-      assert_equal @account.email, response.to[0]
-      assert response.parts.size == 2
-      response.parts.each { |part| assert part.body.match(@account.password_reset_code) }
+      account = Account.new valid_account_attributes
+      account.password_reset_code = 'openid123'
+      response = AccountMailer.forgot_password(account)
+      assert_equal account.email, response.to[0]
+      response.parts.each { |part| assert part.body.match('openid123') }
     end
 
   end
