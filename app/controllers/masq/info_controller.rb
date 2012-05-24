@@ -10,7 +10,11 @@ module Masq
     # not contain any links, the user has to navigate to
     # the right login page manually.
     def safe_login
-      render :layout => false
+      if not Masq::Engine.config.masq.include? 'protect_phishing' or Masq::Engine.config.masq['protect_phishing']
+        render :layout => false
+      else
+        redirect_to login_url
+      end
     end
 
     def help

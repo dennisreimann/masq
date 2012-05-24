@@ -10,6 +10,7 @@ default: &default
     enabled: false
     default_mail_domain: example.com
     random_password: true
+  protect_phishing: true
   name: masq
   host: localhost:3000
   email: info@your.domain.com
