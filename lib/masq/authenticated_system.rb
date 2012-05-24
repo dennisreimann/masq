@@ -97,7 +97,7 @@ module Masq
 
     # Called from #current_account.  First attempt to login by the account id stored in the session.
     def login_from_session
-      account = Account.find(session[:account_id]) if session[:account_id]
+      account = Account.find_by_id(session[:account_id]) if session[:account_id]
       if not account.nil?
         self.auth_type_used = :session
         self.current_account = account
