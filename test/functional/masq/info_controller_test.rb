@@ -58,5 +58,17 @@ module Masq
       assert_select "ul#navi li a", {:text => I18n.t(:logout), :count => 0}
     end
 
+    def test_phishing_protection_enabled
+      Masq::Engine.config.masq['protect_phishing'] = true
+      get :safe_login
+      assert_select 'a[href=?]', login_path, false
+    end
+
+    def test_phishing_protection_disabled
+      Masq::Engine.config.masq['protect_phishing'] = false
+      get :safe_login
+      assert_redirected_to login_path
+    end
+
   end
 end
