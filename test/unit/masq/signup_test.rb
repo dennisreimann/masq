@@ -48,6 +48,7 @@ module Masq
       persona = account.personas.first
       assert_not_nil persona
       assert_equal 'Standard', persona.title
+      assert_equal account.email, persona.email
       assert_equal 1, account.personas.size
     end
 
