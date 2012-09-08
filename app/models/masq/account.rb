@@ -230,8 +230,11 @@ module Masq
 
     # Utilizes the Yubico library to verify an one time password
     def self.verify_yubico_otp(otp)
-      yubico = Yubico.new(Masq::Engine.config.masq['yubico']['id'], Masq::Engine.config.masq['yubico']['api_key'])
-      yubico.verify(otp) == Yubico::E_OK
+      begin
+        Yubikey::OTP::Verify.new(otp).valid?
+      rescue Yubikey::OTP::InvalidOTPError
+        false
+      end
     end
 
     def deliver_forgot_password
