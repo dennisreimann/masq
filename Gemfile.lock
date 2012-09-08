@@ -90,7 +90,7 @@ GEM
     rb-fsevent (0.9.1)
     rdoc (3.12)
       json (~> 1.4)
-    ruby-openid (2.1.8)
+    ruby-openid (2.2.0)
     ruby-yadis (0.3.4)
     ruby_gntp (0.3.4)
     sprockets (2.1.3)
