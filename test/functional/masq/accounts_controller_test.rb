@@ -63,6 +63,12 @@ module Masq
       assert_login_required
     end
 
+    def test_should_display_current_account_on_edit
+      login_as(:standard)
+      get :edit
+      assert_select "input#account_email[value='quentin@example.com']"
+    end
+
     def test_should_require_login_for_change_password_and_change_password_is_enabled
       Masq::Engine.config.masq['can_change_password'] = true
       put :change_password

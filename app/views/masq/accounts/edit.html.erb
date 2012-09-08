@@ -2,7 +2,7 @@
 
 <%= error_messages_for current_account %>
 
-<%= form_for :account, :url => account_path, :html => { :method => :put } do |f| %>
+<%= form_for current_account, :url => account_path, :html => { :method => :put } do |f| %>
 	<% unless email_as_login? -%>
 	<div class="row">
 		<%= f.label :email, t(:email) %>
