@@ -42,7 +42,10 @@ module Masq
     end
 
     def make_default_persona
-      account.public_persona = account.personas.build(:title => "Standard", :email => account.email)
+      account.public_persona = account.personas.build(
+                                                  :title => "Standard",
+                                                  :email => account.email
+                                                )
       account.public_persona.deletable = false
       account.public_persona.save!
     end
