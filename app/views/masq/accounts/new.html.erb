@@ -3,25 +3,25 @@
 <%= error_messages_for @account %>
 
 <%= form_for @account, :url => account_path do |f| -%>
-	<% unless email_as_login? -%>
-	<div class="row">
-		<%= f.label :login, t(:login) %>
-		<%= f.text_field :login %>
-	</div>
-	<% end -%>
-	<div class="row">
-		<%= f.label :email, t(:email) %>
-		<%= f.text_field :email %>
-	</div>
-	<div class="row">
-		<%= f.label :password, t(:password) %>
-		<%= f.password_field :password %>
-	</div>
-	<div class="row">
-		<%= f.label :password_confirmation, t(:password_confirmation) %>
-		<%= f.password_field :password_confirmation %>
-	</div>
-	<div>
-  	<%= f.submit t(:signup) %>
-	</div>
-<% end -%>
+  <% unless email_as_login? -%>
+  <div class="row">
+    <%= f.label :login, t(:login) %>
+    <%= f.text_field :login %>
+  </div>
+  <% end -%>
+  <div class="row">
+    <%= f.label :email, t(:email) %>
+    <%= f.text_field :email %>
+  </div>
+  <div class="row">
+    <%= f.label :password, t(:password) %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="row">
+    <%= f.label :password_confirmation, t(:password_confirmation) %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div>
+    <%= f.submit t(:signup) %>
+  </div>
+<% end %>

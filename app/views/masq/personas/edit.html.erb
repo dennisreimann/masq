@@ -3,7 +3,7 @@
 
 <%= form_for [:account, persona] do |f| %>
   <%= render :partial => 'form', :object => f %>
-	<div>
-		<%= f.submit t(:submit_update), :class => 'labelspace' %>
-	</div>
+  <div>
+    <%= f.submit t(:submit_update), :class => 'labelspace' %>
+  </div>
 <% end %>

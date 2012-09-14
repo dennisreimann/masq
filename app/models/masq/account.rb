@@ -3,25 +3,28 @@ require 'digest/sha1'
 module Masq
   class Account < ActiveRecord::Base
     has_many :personas, :dependent => :delete_all, :order => 'id ASC'
-    has_many :sites, :dependent => :destroy
+    has_many :sites,    :dependent => :destroy
     belongs_to :public_persona, :class_name => "Persona"
 
-    validates_presence_of :login
-    validates_length_of :login, :within => 3..254
+    validates_presence_of   :login
+    validates_length_of     :login, :within => 3..254
     validates_uniqueness_of :login, :case_sensitive => false
-    validates_format_of :login, :with => /^[A-Za-z0-9_@.-]+$/
-    validates_presence_of :email
+    validates_format_of     :login, :with => /^[A-Za-z0-9_@.-]+$/
+
+    validates_presence_of   :email
     validates_uniqueness_of :email, :case_sensitive => false
-    validates_format_of :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
-    validates_presence_of :password, :if => :password_required?
-    validates_presence_of :password_confirmation, :if => :password_required?
-    validates_length_of :password, :within => 6..40, :if => :password_required?
+    validates_format_of     :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
+
+    validates_presence_of     :password, :if => :password_required?
+    validates_presence_of     :password_confirmation, :if => :password_required?
+    validates_length_of       :password, :within => 6..40, :if => :password_required?
     validates_confirmation_of :password, :if => :password_required?
-    # check `rake routes' for whether this list is still complete when routes are changed
+    # check `rake routes' for whether this list is still complete when routes
+    # are changed
     validates_exclusion_of :login, :in => %w[account session password help safe-login forgot_password reset_password login logout server consumer]
 
-    before_save   :encrypt_password
-    after_save    :deliver_forgot_password
+    before_save :encrypt_password
+    after_save  :deliver_forgot_password
 
     attr_accessible :login, :email, :password, :password_confirmation, :public_persona_id, :yubikey_mandatory
     attr_accessor :password
@@ -34,13 +37,17 @@ module Masq
       end
     end
 
-    # Finds the user with the corresponding activation code, activates their account and returns the user.
+    # Finds the user with the corresponding activation code, activates their
+    # account and returns the user.
     #
     # Raises:
-    # [Account::ActivationCodeNotFound] if there is no user with the corresponding activation code
-    # [Account::AlreadyActivated] if the user with the corresponding activation code has already activated their account
+    # [Account::ActivationCodeNotFound] if there is no user with the
+    # corresponding activation code
+    # [Account::AlreadyActivated] if the user with the corresponding activation
+    # code has already activated their account
     def self.find_and_activate!(activation_code)
       raise ArgumentError if activation_code.nil?
+
       user = find_by_activation_code(activation_code)
       raise ActivationCodeNotFound unless user
       raise AlreadyActivated.new(user) if user.active?
@@ -59,7 +66,7 @@ module Masq
 
     def activate!
       @activated = true
-      self.activated_at = Time.now.utc
+      self.activated_at    = Time.now.utc
       self.activation_code = nil
       self.save
     end
@@ -69,7 +76,8 @@ module Masq
       @activated
     end
 
-    # Does the user have the possibility to authenticate with a one time password?
+    # Does the user have the possibility to authenticate with a one time
+    # password?
     def has_otp_device?
       !yubico_identity.nil?
     end
@@ -85,11 +93,15 @@ module Masq
         else
           pw = password
         end
+
+        email = "#{login}@#{Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain']}"
+
         signup = Signup.create_account!(
-          :login => login,
-          :password => pw,
+          :login                 => login,
+          :password              => pw,
           :password_confirmation => pw,
-          :email => "#{login}@#{Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain']}")
+          :email                 => email
+        )
         a = signup.account if signup.succeeded?
       end
 
@@ -149,7 +161,8 @@ module Masq
       remember_token_expires_at && Time.now.utc < remember_token_expires_at
     end
 
-    # These create and unset the fields required for remembering users between browser closes
+    # These create and unset the fields required for remembering users between
+    # browser closes
     def remember_me
       remember_me_for 2.weeks
     end
@@ -219,8 +232,8 @@ module Masq
       yubico_otp[0..11]
     end
 
-    # Recieves a login token which consists of the users password and
-    # a Yubico one time password (the otp is always 44 characters long)
+    # Receives a login token which consists of the users password and a Yubico
+    # one time password (the otp is always 44 characters long)
     def self.split_password_and_yubico_otp(token)
       token.reverse!
       yubico_otp = token.slice!(0..43).reverse
@@ -240,6 +253,5 @@ module Masq
     def deliver_forgot_password
       AccountMailer.forgot_password(self).deliver if recently_forgot_password?
     end
-
   end
 end

@@ -17,7 +17,10 @@ module Masq
     # Reset password
     def update
       unless params[:password].blank?
-        if @account.update_attributes(:password => params[:password], :password_confirmation => params[:password_confirmation])
+        if @account.update_attributes(
+             :password              => params[:password],
+             :password_confirmation => params[:password_confirmation]
+           )
           redirect_to login_path, :notice => t(:password_reset)
         else
           flash[:alert] = t(:password_mismatch)
@@ -33,7 +36,7 @@ module Masq
 
     def find_account_by_reset_code
       @reset_code = params[:id]
-      @account = Account.find_by_password_reset_code(@reset_code) unless @reset_code.blank?
+      @account    = Account.find_by_password_reset_code(@reset_code) unless @reset_code.blank?
       redirect_to(forgot_password_path, :alert => t(:reset_code_invalid_try_again)) unless @account
     end
 

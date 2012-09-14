@@ -10,6 +10,7 @@ module Masq
         redirect_to consumer_path, :alert => "Discovery failed for #{params[:openid_identifier]}: #{e}"
         return
       end
+
       if params[:use_sreg]
         sregreq = OpenID::SReg::Request.new
         sregreq.policy_url = 'http://www.policy-url.com'
@@ -18,6 +19,7 @@ module Masq
         oidreq.add_extension(sregreq)
         oidreq.return_to_args['did_sreg'] = 'y'
       end
+
       if params[:use_ax_fetch]
         axreq = OpenID::AX::FetchRequest.new
         requested_attrs = [['https://openid.tzi.de/spec/schema', 'uid', true],
@@ -35,6 +37,7 @@ module Masq
         oidreq.add_extension(axreq)
         oidreq.return_to_args['did_ax_fetch'] = 'y'
       end
+
       if params[:use_ax_store]
         ax_store_req = OpenID::AX::StoreRequest.new
         ax_store_req.set_values('http://axschema.org/contact/email', %w(email@example.com))
@@ -43,6 +46,7 @@ module Masq
         oidreq.add_extension(ax_store_req)
         oidreq.return_to_args['did_ax_store'] = 'y'
       end
+
       if params[:use_pape]
         papereq = OpenID::PAPE::Request.new
         papereq.add_policy_uri(OpenID::PAPE::AUTH_PHISHING_RESISTANT)
@@ -50,9 +54,11 @@ module Masq
         oidreq.add_extension(papereq)
         oidreq.return_to_args['did_pape'] = 'y'
       end
+
       if params[:force_post]
         oidreq.return_to_args['force_post'] = 'x' * 2048
       end
+
       if oidreq.send_redirect?(consumer_url, consumer_complete_url, params[:immediate])
         redirect_to oidreq.redirect_url(consumer_url, consumer_complete_url, params[:immediate])
       else
@@ -74,8 +80,9 @@ module Masq
           t(:verification_failed_message, :message => oidresp.message)
       when OpenID::Consumer::SUCCESS
         flash[:notice] = t(:verification_of_identifier_succeeded, :identifier => oidresp.display_identifier)
+
         if params[:did_sreg]
-          sreg_resp = OpenID::SReg::Response.from_success_response(oidresp)
+          sreg_resp    = OpenID::SReg::Response.from_success_response(oidresp)
           sreg_message = "\n\n" + t(:simple_registration_data_requested)
           if sreg_resp.empty?
             sreg_message << ", " + t(:but_none_was_returned)
@@ -85,6 +92,7 @@ module Masq
           end
           flash[:notice] += sreg_message
         end
+
         if params[:did_ax_fetch]
           ax_fetch_resp = OpenID::AX::FetchResponse.from_success_response(oidresp)
           ax_fetch_message = "\n\n" + t(:attribute_exchange_data_requested)
@@ -96,6 +104,7 @@ module Masq
           end
           flash[:notice] += ax_fetch_message
         end
+
         if params[:did_ax_store]
           ax_store_resp = OpenID::AX::StoreResponse.from_success_response(oidresp)
           ax_store_message = "\n\n" + t(:attribute_exchange_store_requested)
@@ -110,15 +119,18 @@ module Masq
           end
           flash[:notice] += ax_store_message
         end
+
         if params[:did_pape]
-          pape_resp = OpenID::PAPE::Response.from_success_response(oidresp)
+          pape_resp    = OpenID::PAPE::Response.from_success_response(oidresp)
           pape_message = "\n\n" + t(:authentication_policies_requested)
+
           unless pape_resp.auth_policies.empty?
             pape_message << ", " + t(:and_server_reported_the_following) + "\n"
             pape_resp.auth_policies.each { |p| pape_message << "#{p}\n" }
           else
             pape_message << ", " + t(:but_the_server_did_not_report_one)
           end
+
           pape_message << "\n" + t(:authentication_time) + ": #{pape_resp.auth_time}" if pape_resp.auth_time
           pape_message << "\nNIST Auth Level: #{pape_resp.nist_auth_level}" if pape_resp.nist_auth_level
           flash[:notice] += pape_message

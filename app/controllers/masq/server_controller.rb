@@ -66,23 +66,34 @@ module Masq
       @site.persona = current_account.personas.find(params[:persona_id] || :first) if sreg_request || ax_store_request || ax_fetch_request
     end
 
-    # This action is called by submitting the decision form, the information entered by
-    # the user is used to answer the request. If the user decides to always trust the
-    # relying party, a new site according to the release policies the will be created.
+    # This action is called by submitting the decision form, the information
+    # entered by the user is used to answer the request. If the user decides to
+    # always trust the relying party, a new site according to the release
+    # policies the will be created.
     def complete
       if params[:cancel]
         cancel
       else
         resp = checkid_request.answer(true, nil, identifier(current_account))
         if params[:always]
-          @site = current_account.sites.find_or_create_by_persona_id_and_url(params[:site][:persona_id], params[:site][:url])
+          @site = current_account.sites.find_or_create_by_persona_id_and_url(
+                    params[:site][:persona_id],
+                    params[:site][:url]
+                  )
           @site.update_attributes(params[:site])
         elsif sreg_request || ax_fetch_request
-          @site = current_account.sites.find_or_initialize_by_persona_id_and_url(params[:site][:persona_id], params[:site][:url])
+          @site = current_account.sites.find_or_initialize_by_persona_id_and_url(
+                    params[:site][:persona_id],
+                    params[:site][:url]
+                  )
           @site.attributes = params[:site]
         elsif ax_store_request
-          @site = current_account.sites.find_or_initialize_by_persona_id_and_url(params[:site][:persona_id], params[:site][:url])
+          @site = current_account.sites.find_or_initialize_by_persona_id_and_url(
+                    params[:site][:persona_id],
+                    params[:site][:url]
+                  )
           not_supported, not_accepted, accepted = [], [], []
+
           ax_store_request.data.each do |type_uri, values|
             if property = Persona.attribute_name_for_type_uri(type_uri)
               store_attribute = params[:site][:ax_store][property.to_sym]
@@ -96,6 +107,7 @@ module Masq
               not_supported << type_uri
             end
           end
+
           ax_store_response = (accepted.count > 0) ? OpenID::AX::StoreResponse.new : OpenID::AX::StoreResponse.new(false, "None of the attributes were accepted.")
           resp.add_extension(ax_store_response)
         end
@@ -163,6 +175,7 @@ module Masq
           t(:service_provider_requires_reauthentication_last_login_too_long_ago) :
           t(:login_to_verify_identity)
         session[:return_to] = proceed_path
+
         redirect_to login_path
       end
     end

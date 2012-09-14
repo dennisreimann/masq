@@ -2,8 +2,8 @@
 <%= error_messages_for persona %>
 
 <%= form_for [:account, persona] do |f| %>
-	<%= render :partial => 'form', :object => f %>
-	<div>
-		<%= f.submit 'create', :class => 'labelspace' %>
-	</div>
+  <%= render :partial => 'form', :object => f %>
+  <div>
+    <%= f.submit 'create', :class => 'labelspace' %>
+  </div>
 <% end %>
