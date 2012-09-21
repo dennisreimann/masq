@@ -3,20 +3,20 @@
 <%= error_messages_for current_account %>
 
 <%= form_for current_account, :url => account_path, :html => { :method => :put } do |f| %>
-	<% unless email_as_login? -%>
-	<div class="row">
-		<%= f.label :email, t(:email) %>
-		<%= f.text_field :email %>
-	</div>
-	<% end -%>
+  <% unless email_as_login? -%>
+  <div class="row">
+    <%= f.label :email, t(:email) %>
+    <%= f.text_field :email %>
+  </div>
+  <% end -%>
 
-	<div class="row">
-		<%= f.label :public_persona_id, t(:public_persona) %>
-  	<%= f.select :public_persona_id, current_account.personas.map{ |p| [ p.title, p.id ]}, :include_blank => true %>
-	</div>
+  <div class="row">
+    <%= f.label :public_persona_id, t(:public_persona) %>
+    <%= f.select :public_persona_id, current_account.personas.map{ |p| [ p.title, p.id ]}, :include_blank => true %>
+  </div>
 
-	<div>
-	  <%= f.submit t(:submit_update) %>
+  <div>
+    <%= f.submit t(:submit_update) %>
   </div>
 <% end %>
 
