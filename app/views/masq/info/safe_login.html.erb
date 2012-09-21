@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title><%=h page_title %></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="Shortcut Icon" href="/favicon.ico" type="image/x-icon" />
-		<link rel="icon" href="/favicon.ico" type="image/ico" />
-		<%= stylesheet_link_tag 'masq/application' %>
-	</head>
-	<body>
-		<div id="head">
-			<h1><%= Masq::Engine.config.masq['name'] %></h1>
-		</div>
-		<div id="main">
-			<div class="wrap">
-				<h2><%=t :login_to_proceed %></h2>
-				<% if checkid_request %>
-    		<p><%=t :host_requests_identification_you_need_to_login, :host => extract_host(checkid_request.trust_root) %></p>
-				<% end %>
-				<%=simple_format t(:login_intro, :login_url => login_url(:protocol => scheme)) %>
-			</div>
-		</div>
-	</body>
+  <head>
+    <title><%=h page_title %></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="Shortcut Icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/ico" />
+    <%= stylesheet_link_tag 'masq/application' %>
+  </head>
+  <body>
+    <div id="head">
+      <h1><%= Masq::Engine.config.masq['name'] %></h1>
+    </div>
+    <div id="main">
+      <div class="wrap">
+        <h2><%=t :login_to_proceed %></h2>
+        <% if checkid_request %>
+        <p><%=t :host_requests_identification_you_need_to_login, :host => extract_host(checkid_request.trust_root) %></p>
+        <% end %>
+        <%=simple_format t(:login_intro, :login_url => login_url(:protocol => scheme)) %>
+      </div>
+    </div>
+  </body>
 </html>

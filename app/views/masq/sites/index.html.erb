@@ -5,14 +5,14 @@
 
 <% unless @sites.empty? %>
 <ul>
-  <% @sites.each do |site| %> 
-	<li>    
+  <% @sites.each do |site| %>
+  <li>
     <h3><%=h extract_host(site.url) %> <span class="note">(<%=h site.persona.title %>)</span></h3>
-		<div class="options">
+    <div class="options">
        <%= link_to t(:edit_link), edit_account_site_path(site) %>
        <%= link_to t(:delete_link), account_site_path(site), :confirm => t(:really_want_to_delete_trust_for_site, :site => h(extract_host(site.url))), :method => :delete %>
     </div>
-	</li>
+  </li>
   <% end %>
 </ul>
 <% else %>
