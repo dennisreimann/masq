@@ -12,7 +12,17 @@ end
 
 Rails.backtrace_cleaner.remove_silencers!
 
+if ActionDispatch::IntegrationTest.method_defined?(:fixture_path=)
+  ActionDispatch::IntegrationTest.fixture_path = File.expand_path("../fixtures", __FILE__)
+end
+
 module Masq
+  class ActionController::TestCase
+    setup do
+      @routes = Engine.routes
+    end
+  end
+
   module TestHelper
 
     private
