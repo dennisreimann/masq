@@ -1,9 +1,7 @@
 module Masq
-  class ApplicationController < ActionController::Base
+  class BaseController < ActionController::Base
     include OpenidServerSystem
     include AuthenticatedSystem
-
-    helper_method :email_as_login?
 
     protect_from_forgery
 
@@ -11,7 +9,7 @@ module Masq
     rescue_from ::ActionController::InvalidAuthenticityToken, :with => :render_422
 
     helper_method :extract_host, :extract_login_from_identifier, :checkid_request,
-      :identifier, :endpoint_url, :scheme
+      :identifier, :endpoint_url, :scheme, :email_as_login?
 
     protected
 

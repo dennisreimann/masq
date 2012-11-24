@@ -1,5 +1,5 @@
 module Masq
-  class InfoController < ApplicationController
+  class InfoController < BaseController
     # The yadis discovery header tells incoming OpenID
     # requests where to find the server endpoint.
     def index

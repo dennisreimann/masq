@@ -1,5 +1,5 @@
 module Masq
-  class PersonasController < ApplicationController
+  class PersonasController < BaseController
     before_filter :login_required
     before_filter :store_return_url, :only => [:new, :edit]
 

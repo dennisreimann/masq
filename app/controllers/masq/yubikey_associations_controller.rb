@@ -1,5 +1,5 @@
 module Masq
-  class YubikeyAssociationsController < ApplicationController
+  class YubikeyAssociationsController < BaseController
     before_filter :login_required
 
     def create

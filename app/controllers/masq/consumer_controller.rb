@@ -1,5 +1,5 @@
 module Masq
-  class ConsumerController < ApplicationController
+  class ConsumerController < BaseController
 
     skip_before_filter :verify_authenticity_token
 

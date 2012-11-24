@@ -1,5 +1,5 @@
 module Masq
-  class SessionsController < ApplicationController
+  class SessionsController < BaseController
     before_filter :login_required, :only => :destroy
     after_filter :set_login_cookie, :only => :create
 

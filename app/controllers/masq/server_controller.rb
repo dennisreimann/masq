@@ -1,5 +1,5 @@
 module Masq
-  class ServerController < ApplicationController
+  class ServerController < BaseController
     # CSRF-protection must be skipped, because incoming
     # OpenID requests lack an authenticity token
     skip_before_filter :verify_authenticity_token

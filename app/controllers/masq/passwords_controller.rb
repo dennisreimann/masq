@@ -1,5 +1,5 @@
 module Masq
-  class PasswordsController < ApplicationController
+  class PasswordsController < BaseController
     before_filter :check_can_change_password, :only => [:create, :edit, :update]
     before_filter :find_account_by_reset_code, :only => [:edit, :update]
 
