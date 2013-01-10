@@ -4,7 +4,7 @@ module Masq
 
     before_validation :make_token, :on => :create
 
-    attr_accessible :parameters
+    #attr_accessible :parameters
     serialize :parameters, Hash
 
     def parameters=(params)

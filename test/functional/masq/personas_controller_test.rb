@@ -2,7 +2,6 @@ require 'test_helper'
 
 module Masq
   class PersonasControllerTest < ActionController::TestCase
-    include Masq::Engine.routes_url_helpers
 
     fixtures :accounts, :personas
 

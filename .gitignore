@@ -17,3 +17,5 @@ test/dummy/tmp
 test/dummy/.sass-cache
 tmp
 vendor/ruby
+.idea
+.rbenv-version

@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "> 3.2.0"
+  s.add_dependency "rails", "~> 4.0.0.beta"
   s.add_dependency "ruby-openid"
   s.add_dependency "ruby-yadis"
   s.add_dependency "yubikey"

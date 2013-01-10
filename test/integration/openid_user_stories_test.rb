@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
-  include Masq::Engine.routes_url_helpers
+  include Masq::Engine.routes.url_helpers
 
   fixtures :all
 
