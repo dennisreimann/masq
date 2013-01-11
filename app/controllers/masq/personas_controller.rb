@@ -60,7 +60,8 @@ module Masq
     end
 
     def persona_params
-      params.require(:persona).permit(:title)
+      rejected_keys = [:created_at, :updated_at, :account_id, :deletable]
+      params.require(:persona).permit!.except(rejected_keys)
     end 
 
     def redirect_back_or_default(default)

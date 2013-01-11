@@ -121,6 +121,7 @@ default: &default
 
 development:
   <<: *default
+  send_activation_mail: false
 
 test:
   <<: *default
