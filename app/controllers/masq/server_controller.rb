@@ -204,7 +204,7 @@ module Masq
       when OpenID::Server::MalformedTrustRoot then "Malformed trust root '#{exception.to_s}'"
       else exception.to_s
       end
-      render :text => h("Invalid OpenID request: #{error}"), :status => 500
+      render :text => "Invalid OpenID request: #{error}", :status => 500
     end
 
     private
