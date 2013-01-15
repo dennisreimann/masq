@@ -8,7 +8,7 @@
     <h3><%=h persona.title%></h3>
     <div class="options">
       <%= link_to t(:edit), edit_account_persona_path(persona) %>
-      <%= link_to t(:delete), account_persona_path(persona), :confirm => t(:really_want_to_delete_persona, :title => h(persona.title)), :method => :delete %>
+      <%= link_to t(:delete), account_persona_path(persona), :data => { :confirm => t(:really_want_to_delete_persona, :title => h(persona.title))}, :method => :delete %>
     </div>
   </li>
   <% end %>

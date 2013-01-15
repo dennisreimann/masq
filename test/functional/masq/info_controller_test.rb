@@ -2,7 +2,6 @@ require 'test_helper'
 
 module Masq
   class InfoControllerTest < ActionController::TestCase
-    include Masq::Engine.routes_url_helpers
 
     def test_should_set_yadis_header_on_homepage
       get :index

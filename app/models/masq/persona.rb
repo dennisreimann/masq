@@ -9,7 +9,7 @@ module Masq
 
     before_destroy :check_deletable!
 
-    attr_protected :account_id, :deletable
+    #attr_protected :account_id, :deletable
 
     class NotDeletable < StandardError; end
 

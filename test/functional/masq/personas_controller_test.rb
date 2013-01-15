@@ -2,7 +2,6 @@ require 'test_helper'
 
 module Masq
   class PersonasControllerTest < ActionController::TestCase
-    include Masq::Engine.routes_url_helpers
 
     fixtures :accounts, :personas
 
@@ -62,6 +61,8 @@ module Masq
       login_as(:standard)
       put :update, :id => personas(:public).id, :persona => valid_persona_attributes
       assert_redirected_to account_personas_path
+      expected_attributes = Persona.new(valid_persona_attributes).attributes.reject{|_, v| v.nil?}
+      assert_equal  expected_attributes, Persona.find(personas(:public).id).attributes.slice(*expected_attributes.keys)
     end
 
     def test_should_require_login_for_destroy

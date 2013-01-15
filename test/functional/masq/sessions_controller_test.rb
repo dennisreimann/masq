@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Masq
   class SessionsControllerTest < ActionController::TestCase
-    include Masq::Engine.routes_url_helpers
+
 
     fixtures :accounts
 

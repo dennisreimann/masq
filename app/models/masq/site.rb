@@ -6,7 +6,7 @@ module Masq
 
     validates_presence_of :url, :persona, :account
     validates_uniqueness_of :url, :scope => :account_id
-    attr_accessible :url, :persona_id, :properties, :ax_fetch, :sreg
+    #attr_accessible :url, :persona_id, :properties, :ax_fetch, :sreg
 
     # Sets the release policies by first deleting the old ones and
     # then appending a new one for every given sreg and ax property.

@@ -22,9 +22,8 @@ module Masq
 
     def create
       cookies.delete :auth_token
-      attrs = params[:account]
-      attrs[:login] = attrs[:email] if email_as_login?
-      signup = Signup.create_account!(attrs)
+      account_params[:login] = account_params[:email] if email_as_login?
+      signup = Signup.create_account!(account_params)
       if signup.succeeded?
         redirect_to login_path, :notice => signup.send_activation_email? ?
           t(:thanks_for_signing_up_activation_link) :
@@ -36,11 +35,10 @@ module Masq
     end
 
     def update
-      attrs = params[:account]
-      attrs.delete(:email) if email_as_login?
-      attrs.delete(:login)
+      account_params.delete(:email) if email_as_login?
+      account_params.delete(:login)
 
-      if current_account.update_attributes(attrs)
+      if current_account.update_attributes(account_params)
         redirect_to edit_account_path(:account => current_account), :notice => t(:profile_updated)
       else
         render :action => 'edit'
@@ -120,5 +118,10 @@ module Masq
         params[:account] = $1
       end
     end
+
+    def account_params
+      @account_params ||= params.require(:account).permit(:login, :email, :password, :password_confirmation, :public_persona_id, :yubikey_mandatory)
+    end
+
   end
 end

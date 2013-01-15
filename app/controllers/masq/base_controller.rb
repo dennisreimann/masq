@@ -1,7 +1,9 @@
 module Masq
-  class BaseController < ActionController::Base
+  class BaseController < ::ApplicationController
     include OpenidServerSystem
     include AuthenticatedSystem
+
+    helper 'masq/application'
 
     protect_from_forgery
 

@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] = "test"
 
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rails/test_help"
+require 'mocha/setup'
 
 begin
   require 'turn/autorun'
@@ -18,6 +19,7 @@ end
 
 module Masq
   class ActionController::TestCase
+    include Masq::Engine.routes.url_helpers
     setup do
       @routes = Engine.routes
     end
@@ -154,3 +156,5 @@ end
 
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+
+

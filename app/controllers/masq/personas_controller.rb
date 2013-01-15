@@ -13,6 +13,11 @@ module Masq
       end
     end
 
+    def new
+      @persona = current_account.personas.new
+    end
+
+
     def create
       respond_to do |format|
         if persona.save!
@@ -26,7 +31,7 @@ module Masq
 
     def update
       respond_to do |format|
-        if persona.update_attributes(params[:persona])
+        if persona.update_attributes(persona_params)
           flash[:notice] = t(:persona_updated)
           format.html { redirect_back_or_default account_personas_path }
         else
@@ -51,8 +56,13 @@ module Masq
     def persona
       @persona ||= params[:id].present? ?
         current_account.personas.find(params[:id]) :
-        current_account.personas.new(params[:persona])
+        current_account.personas.new(persona_params)
     end
+
+    def persona_params
+      rejected_keys = [:created_at, :updated_at, :account_id, :deletable]
+      params.require(:persona).permit!.except(rejected_keys)
+    end 
 
     def redirect_back_or_default(default)
       case session[:return_to]

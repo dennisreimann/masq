@@ -62,8 +62,8 @@ module Masq
     # Displays the decision page on that the user can confirm the request and
     # choose which data should be transfered to the relying party.
     def decide
-      @site = current_account.sites.find_or_initialize_by_url(checkid_request.trust_root)
-      @site.persona = current_account.personas.find(params[:persona_id] || :first) if sreg_request || ax_store_request || ax_fetch_request
+      @site = current_account.sites.find_or_initialize_by(url: checkid_request.trust_root)
+      @site.persona = current_account.personas.where(params[:persona_id] ).first || current_account.personas.first  if sreg_request || ax_store_request || ax_fetch_request
     end
 
     # This action is called by submitting the decision form, the information entered by
@@ -75,13 +75,13 @@ module Masq
       else
         resp = checkid_request.answer(true, nil, identifier(current_account))
         if params[:always]
-          @site = current_account.sites.find_or_create_by_persona_id_and_url(params[:site][:persona_id], params[:site][:url])
-          @site.update_attributes(params[:site])
+          @site = current_account.sites.where(persona_id: params[:site][:persona_id], url: params[:site][:url]).first_or_create
+          @site.update_attributes(site_params)
         elsif sreg_request || ax_fetch_request
-          @site = current_account.sites.find_or_initialize_by_persona_id_and_url(params[:site][:persona_id], params[:site][:url])
-          @site.attributes = params[:site]
+          @site = current_account.sites.where(persona_id: params[:site][:persona_id], url: params[:site][:url]).first_or_create
+          @site.attributes = site_params
         elsif ax_store_request
-          @site = current_account.sites.find_or_initialize_by_persona_id_and_url(params[:site][:persona_id], params[:site][:url])
+          @site = current_account.sites.where(persona_id: params[:site][:persona_id], url: params[:site][:url]).first_or_create
           not_supported, not_accepted, accepted = [], [], []
           ax_store_request.data.each do |type_uri, values|
             if property = Persona.attribute_name_for_type_uri(type_uri)
@@ -204,7 +204,7 @@ module Masq
       when OpenID::Server::MalformedTrustRoot then "Malformed trust root '#{exception.to_s}'"
       else exception.to_s
       end
-      render :text => h("Invalid OpenID request: #{error}"), :status => 500
+      render :text => "Invalid OpenID request: #{error}", :status => 500
     end
 
     private
@@ -227,6 +227,12 @@ module Masq
       current_account.last_authenticated_with_yubikey? ?
         [OpenID::PAPE::AUTH_MULTI_FACTOR, OpenID::PAPE::AUTH_PHISHING_RESISTANT] :
         []
+    end
+
+    def site_params
+      authorized_params = params.require(:site).permit( :persona_id ,  :url )
+      additional_data  = params[:site].slice(:ax_fetch, :sreg, :properties)
+      authorized_params.merge(additional_data)
     end
   end
 end
