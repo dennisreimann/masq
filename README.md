@@ -1,5 +1,6 @@
 # Masq OpenID Server
 
+[![Gem Version](https://badge.fury.io/rb/masq.png)](http://badge.fury.io/rb/masq)
 [![Build Status](https://secure.travis-ci.org/dennisreimann/masq.png)](http://travis-ci.org/dennisreimann/masq)
 
 Masq is a mountable Rails engine that provides OpenID server/identity provider functionality.
