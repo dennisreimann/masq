@@ -117,7 +117,7 @@ module Masq
       post :create, :login => @account.login, :password => 'test'
       @account.reload
       assert_not_nil @account.last_authenticated_at
-      assert !@account.last_authenticated_with_yubikey
+      assert !@account.yubikey_last_authenticated_at
     end
 
     def test_should_authenticate_with_password_and_yubico_otp
@@ -127,7 +127,7 @@ module Masq
       post :create, :login => @account.login, :password => 'test' + yubico_otp
       @account.reload
       assert_not_nil @account.last_authenticated_at
-      assert @account.last_authenticated_with_yubikey
+      assert @account.yubikey_last_authenticated_at
     end
 
     def test_should_disallow_password_only_login_when_yubikey_is_mandatory
