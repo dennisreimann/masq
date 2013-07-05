@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120312120000) do
+ActiveRecord::Schema.define(:version => 20130626220915) do
 
   create_table "masq_accounts", :force => true do |t|
     t.boolean  "enabled",                                       :default => true
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20120312120000) do
     t.string   "yubico_identity",                 :limit => 12
     t.integer  "public_persona_id"
     t.datetime "last_authenticated_at"
-    t.boolean  "last_authenticated_with_yubikey"
+    t.boolean  "last_authenticated_by_yubikey"
     t.boolean  "yubikey_mandatory",                             :default => false, :null => false
     t.datetime "remember_token_expires_at"
     t.datetime "activated_at"
