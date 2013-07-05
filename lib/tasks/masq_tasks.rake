@@ -51,6 +51,7 @@ namespace :masq do
 
     desc "Run CI build task"
     task :ci => [:prepare_ci] do
+      Rake::Task['db:migrate'].invoke
       Rake::Task['test'].invoke
     end
   end
