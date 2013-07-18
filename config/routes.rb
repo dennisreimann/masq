@@ -34,7 +34,7 @@ Masq::Engine.routes.draw do
   post "/consumer/start" => "consumer#start", :as => :consumer_start
   match "/consumer/complete" => "consumer#complete", :as => :consumer_complete
 
-  get "/*account" => "accounts#show", :as => :identity
+  get "/*account" => "accounts#show", :as => :identity,  :constraints => {:format => /\.xrds/}
 
   root :to => "info#index"
 end
