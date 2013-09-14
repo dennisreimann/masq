@@ -37,6 +37,8 @@ namespace :masq do
           "database" => database,
           "username" => ENV["DB_USERNAME"],
           "password" => ENV["DB_PASSWORD"],
+          "port" => ENV["DB_PORT"] ? ENV["DB_PORT"].to_i : nil,
+          "socket" => ENV["DB_SOCKET"] ? ENV["DB_SOCKET"] : nil,
           "host" => "localhost",
           "encoding" => "utf8",
           "pool" => 5,

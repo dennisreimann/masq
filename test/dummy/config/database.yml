@@ -4,6 +4,8 @@ test:
   database: masq_test
   username: 
   password: 
+  port: 
+  socket: /opt/boxen/data/mysql/socket
   host: localhost
   encoding: utf8
   pool: 5
