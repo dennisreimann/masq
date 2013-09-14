@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    masq (0.2.8)
+    masq (0.3.0)
       i18n_data
       rails (~> 3.2.14)
       ruby-openid (~> 2.3.0)
