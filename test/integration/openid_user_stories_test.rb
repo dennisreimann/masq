@@ -190,42 +190,6 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
     assert_not_equal sent_email, @persona.email, "E-mail was not expected to be #{sent_email}"
   end
 
-  def test_storing_ax_data
-    @account = accounts(:standard)
-    @persona = @account.personas.first
-    claimed_id = identifier('quentin')
-    request_params = checkid_request_params.merge(
-      'openid.identity' => claimed_id,
-      'openid.claimed_id' => claimed_id).merge(
-      ax_store_request_params)
-    # OpenID requests comes in
-    post server_path, request_params
-    # User has to log in
-    assert_redirected_to safe_login_path
-    post session_path, :login => 'quentin', :password => 'test'
-    # User has to verify the request
-    assert_redirected_to proceed_path
-    follow_redirect!
-    assert_redirected_to decide_path
-    follow_redirect!
-    assert_template 'server/decide'
-    sent_fullname = ax_store_request_params['openid.ax.value.fullname.1']
-    sent_email = ax_store_request_params['openid.ax.value.email.1']
-    # Simulate accepting the fullname but not the email
-    post complete_path, :temporary => 1, :site => {
-      :persona_id => @persona.id,
-      :ax_store => {
-        'fullname' => { 'type' => ax_store_request_params['openid.ax.type.fullname'], 'value' => sent_fullname },
-        'email' => { 'type' => ax_store_request_params['openid.ax.type.email'] } } }
-    assert_match checkid_request_params['openid.return_to'], @response.redirect_url
-    assert_match "openid.mode=id_res", @response.redirect_url, "Response mode was expected to be id_res"
-    assert_match "openid.ax.mode=store_response", @response.redirect_url, "AX mode was expected to be store_response"
-    # Check the attributes
-    @persona.reload
-    assert_equal sent_fullname, @persona.fullname, "Full name was expected to be #{sent_fullname}"
-    assert_not_equal sent_email, @persona.email, "E-mail was not expected to be #{sent_email}"
-  end
-
   def test_responding_to_pape_requests
     claimed_id = identifier('quentin')
     request_params = checkid_request_params.merge(

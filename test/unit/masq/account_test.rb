@@ -133,16 +133,6 @@ module Masq
       assert_not_equal account, Account.authenticate('quentin', 'test')
     end
 
-    def test_should_create_account_on_demand_if_create_auth_ondemand_is_enabled
-      Masq::Engine.config.masq['create_auth_ondemand']['enabled'] = true
-      Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"
-      Account.authenticate('notexistingtestuser', 'somepassword')
-      account = Account.find_by_login('notexistingtestuser')
-      assert_kind_of Account, account
-      assert_equal 'notexistingtestuser', account.login
-      assert_equal 'notexistingtestuser@example.net', account.email
-    end
-
     def test_should_create_random_password_on_create_account_on_demand_if_create_auth_ondemand_is_enabled_and_random_password_is_enabled
       Masq::Engine.config.masq['create_auth_ondemand']['enabled'] = true
       Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"

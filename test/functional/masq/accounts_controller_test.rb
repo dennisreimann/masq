@@ -119,7 +119,7 @@ module Masq
       assert_select "h2:nth-of-type(2)", I18n.t(:my_password)
     end
 
-    def test_should_not_show_disable_account_if_can_disable_account_is_disabled
+    def test_should_not_show_change_password_if_can_change_password_is_disabled
       Masq::Engine.config.masq['can_change_password'] = false
       login_as(:standard)
       get :edit
