@@ -4,7 +4,7 @@ PATH
     masq (0.3.1)
       i18n_data
       rails (~> 3.2.16)
-      ruby-openid (~> 2.4.0)
+      ruby-openid (~> 2.5.0)
       ruby-yadis
       yubikey
 
@@ -102,7 +102,7 @@ GEM
     rb-fsevent (0.9.3)
     rdoc (3.12.2)
       json (~> 1.4)
-    ruby-openid (2.4.0)
+    ruby-openid (2.5.0)
     ruby-yadis (0.3.4)
     ruby_gntp (0.3.4)
     slop (3.4.4)
