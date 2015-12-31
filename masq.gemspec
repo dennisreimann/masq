@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.16"
-  s.add_dependency "ruby-openid", "~> 2.5.0"
+  s.add_dependency "ruby-openid", "~> 2.5"
   s.add_dependency "ruby-yadis"
   s.add_dependency "yubikey"
   s.add_dependency "i18n_data"
