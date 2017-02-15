@@ -95,7 +95,7 @@ module Masq
 
       if not a.nil? and a.active? and a.enabled
         if a.authenticated?(password) or (Masq::Engine.config.masq['trust_basic_auth'] and basic_auth_used)
-          a.last_authenticated_at, a.last_authenticated_with_yubikey = Time.now, a.authenticated_with_yubikey?
+          a.last_authenticated_at, a.last_authenticated_by_yubikey = Time.now, a.authenticated_with_yubikey?
           a.save(:validate => false)
           return a
         end
