@@ -213,7 +213,7 @@ module Masq
     # http://openid.net/specs/openid-provider-authentication-policy-extension-1_0-01.html#anchor12
     def auth_level
       if Masq::Engine.config.masq['use_ssl']
-        current_account.last_authenticated_with_yubikey? ? 3 : 2
+        current_account.last_authenticated_by_yubikey? ? 3 : 2
       else
         0
       end
@@ -224,7 +224,7 @@ module Masq
     end
 
     def auth_policies
-      current_account.last_authenticated_with_yubikey? ?
+      current_account.last_authenticated_by_yubikey? ?
         [OpenID::PAPE::AUTH_MULTI_FACTOR, OpenID::PAPE::AUTH_PHISHING_RESISTANT] :
         []
     end
